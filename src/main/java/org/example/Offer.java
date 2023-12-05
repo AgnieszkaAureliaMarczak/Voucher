@@ -13,6 +13,10 @@ public class Offer {
         this.name = name;
     }
 
+    public List<Voucher> getVouchers() {
+        return vouchers;
+    }
+
     @Override
     public String toString() {
         return "Offer{" +

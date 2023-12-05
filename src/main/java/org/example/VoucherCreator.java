@@ -1,17 +1,36 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class VoucherCreator {
+    private List<Voucher> vouchers = new ArrayList<>();
+    Scanner scanner = new Scanner(System.in);
 
-    public Voucher createVoucher() {
-        Scanner scanner = new Scanner(System.in);
-        int voucherCount = 0;
-        voucherCount++;
+    public void createVouchers() {
+        int voucherCount;
+        String offerId = getOfferId();
+        int numberOfVouchers = getNumberOfVouchers();
+        for (int i = 1; i <= numberOfVouchers; i++) {
+            int numberOfNights = getNumberOfNights();
+            voucherCount = vouchers.size() + 1;
+            vouchers.add(new Voucher(offerId, voucherCount, numberOfNights));
+        }
+    }
+
+    private String getOfferId() {
         System.out.println("Podaj identyfikator oferty:");
-        String offerId = scanner.nextLine();
+        return scanner.nextLine();
+    }
+
+    private int getNumberOfVouchers() {
+        System.out.println("Podaj liczbę voucherów do utworzenia:");
+        return scanner.nextInt();
+    }
+
+    private int getNumberOfNights() {
         System.out.println("Podaj liczbę noclegów:");
-        int numberOfNights = scanner.nextInt();
-        return new Voucher(offerId,voucherCount,2);
+        return scanner.nextInt();
     }
 }
