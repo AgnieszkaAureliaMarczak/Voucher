@@ -8,20 +8,12 @@ public class VoucherCreator {
     private List<Voucher> vouchers = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
-    public void createVouchers() {
-        int voucherCount;
-        String offerId = getOfferId();
+    public void createVouchers(String offerId) {
         int numberOfVouchers = getNumberOfVouchers();
         for (int i = 1; i <= numberOfVouchers; i++) {
             int numberOfNights = getNumberOfNights();
-            voucherCount = vouchers.size() + 1;
-            vouchers.add(new Voucher(offerId, voucherCount, numberOfNights));
+            vouchers.add(new Voucher(offerId, vouchers.size() + 1, numberOfNights));
         }
-    }
-
-    private String getOfferId() {
-        System.out.println("Podaj identyfikator oferty:");
-        return scanner.nextLine();
     }
 
     private int getNumberOfVouchers() {
@@ -32,5 +24,16 @@ public class VoucherCreator {
     private int getNumberOfNights() {
         System.out.println("Podaj liczbę noclegów:");
         return scanner.nextInt();
+    }
+
+    public List<Voucher> getVouchers() {
+        return vouchers;
+    }
+
+    @Override
+    public String toString() {
+        return "VoucherCreator{" +
+                "vouchers=" + vouchers +
+                '}';
     }
 }

@@ -13,8 +13,12 @@ public class Offer {
         this.name = name;
     }
 
-    public List<Voucher> getVouchers() {
-        return vouchers;
+    public void setVouchers(List<Voucher> vouchers) {
+        this.vouchers = vouchers;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
