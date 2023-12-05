@@ -8,4 +8,16 @@ public class Offer {
     private String name;
     private List<Voucher> vouchers = new ArrayList<>();
 
+    public Offer(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
