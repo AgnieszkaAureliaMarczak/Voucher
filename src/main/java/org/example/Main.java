@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         VoucherCreator voucherCreator = new VoucherCreator();
-        voucherCreator.createVoucher();
-
+        Voucher voucher = voucherCreator.createVoucher();
+        System.out.println(voucher);
     }
 }

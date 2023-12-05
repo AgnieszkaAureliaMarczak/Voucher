@@ -12,4 +12,12 @@ public class Voucher {
         id = offerId + "/" + voucherCount;
         this.numberOfNights = numberOfNights;
     }
+
+    @Override
+    public String toString() {
+        return "Voucher{" +
+                "id='" + id + '\'' +
+                ", numberOfNights=" + numberOfNights +
+                '}';
+    }
 }
