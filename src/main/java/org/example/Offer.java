@@ -21,6 +21,14 @@ public class Offer {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public List<Voucher> getVouchers() {
+        return vouchers;
+    }
+
     @Override
     public String toString() {
         return "Offer{" +

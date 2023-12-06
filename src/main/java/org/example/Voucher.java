@@ -3,21 +3,20 @@ package org.example;
 public class Voucher {
     private String id;
     private int numberOfNights;
+    private Offer offer;
     private int numberOfPeople;
     private String validity;
     private String addOns;
     private String roomType;
 
-    public Voucher(String offerId, int voucherCount, int numberOfNights){
-        id = offerId + "/" + voucherCount;
+    public Voucher(Offer offer, int voucherCount, int numberOfNights){
+        this.offer = offer;
+        id = offer.getId() + "/" + voucherCount;
         this.numberOfNights = numberOfNights;
     }
 
     @Override
     public String toString() {
-        return "Voucher{" +
-                "id='" + id + '\'' +
-                ", numberOfNights=" + numberOfNights +
-                '}';
+        return offer.getName() + ", ilość nocy: " + numberOfNights;
     }
 }

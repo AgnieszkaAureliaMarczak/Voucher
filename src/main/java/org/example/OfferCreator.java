@@ -1,29 +1,36 @@
 package org.example;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class OfferCreator {
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
     private VoucherCreator voucherCreator = new VoucherCreator();
 
     public void createOfferComponents() {
         Offer offer = createOffer();
-        voucherCreator.createVouchers(offer.getId());
-        offer.setVouchers(voucherCreator.getVouchers());
+        voucherCreator.fillWithVouchers(offer);
+        displayVouchers(offer.getVouchers());
     }
 
     public Offer createOffer() {
-        return new Offer(getId(), getName());
+        return new Offer(readId(), readName());
     }
 
-    private String getId() {
-        System.out.println("Podaj identyfikator oferty:");
+    private String readId() {
+        System.out.print("Podaj identyfikator oferty:");
         return scanner.nextLine();
     }
 
-    private String getName() {
-        System.out.println("Podaj nazwę oferty (SEO):");
+    private String readName() {
+        System.out.print("Podaj nazwę oferty (SEO):");
         return scanner.nextLine();
+    }
+
+    public void displayVouchers(List<Voucher> vouchers) {
+        for (Voucher voucher : vouchers) {
+            System.out.println(voucher);
+        }
     }
 
     @Override
