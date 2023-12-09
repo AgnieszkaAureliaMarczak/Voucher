@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class OfferCreator {
     private Scanner scanner = new Scanner(System.in);
     private VoucherCreator voucherCreator = new VoucherCreator();
-   private ContentFileGenerator contentFileGenerator ;
+    private ContentFileGenerator contentFileGenerator;
 
     public OfferCreator(ContentFileGenerator contentFileGenerator) {
         this.contentFileGenerator = contentFileGenerator;
@@ -26,12 +26,12 @@ public class OfferCreator {
     }
 
     private String readId() {
-        System.out.print("Podaj identyfikator oferty:");
+        System.out.print("Podaj identyfikator oferty: ");
         return scanner.nextLine();
     }
 
     private String readName() {
-        System.out.print("Podaj nazwę oferty (SEO):");
+        System.out.print("Podaj nazwę oferty (SEO): ");
         return scanner.nextLine();
     }
 

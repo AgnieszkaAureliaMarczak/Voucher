@@ -17,6 +17,6 @@ public class Voucher {
 
     @Override
     public String toString() {
-        return offer.getName() + ", ilość nocy: " + numberOfNights;
+        return "Nr vouchera: " + id + ", " + offer.getName() + ", ilość nocy: " + numberOfNights;
     }
 }
