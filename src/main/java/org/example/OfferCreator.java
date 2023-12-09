@@ -6,11 +6,19 @@ import java.util.Scanner;
 public class OfferCreator {
     private Scanner scanner = new Scanner(System.in);
     private VoucherCreator voucherCreator = new VoucherCreator();
+   private ContentFileGenerator contentFileGenerator ;
+
+    public OfferCreator(ContentFileGenerator contentFileGenerator) {
+        this.contentFileGenerator = contentFileGenerator;
+    }
 
     public void createOfferComponents() {
         Offer offer = createOffer();
         voucherCreator.fillWithVouchers(offer);
         displayVouchers(offer.getVouchers());
+        ContentCreator contentCreator = new ContentCreator();
+        String offerAsString = contentCreator.createStringOffer(offer);
+        contentFileGenerator.createFile(offerAsString);
     }
 
     public Offer createOffer() {
