@@ -10,6 +10,6 @@ public class ContentCreator {
         for (Voucher voucher : vouchers) {
             offerAsString = offerAsString + voucher + ". ";
         }
-       return offerAsString.substring(0,offerAsString.length() - 3);
+       return offerAsString.substring(0,offerAsString.length() - 1);
     }
 }
