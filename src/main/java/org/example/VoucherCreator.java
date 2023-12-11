@@ -16,8 +16,9 @@ public class VoucherCreator {
             int numberOfPeople = readNumberOfPeople(i);
             scanner.nextLine();
             String roomType = readRoomType(i);
-            vouchers.add(new Voucher(offer, vouchers.size() + 1, numberOfNights, numberOfPeople,
-                    roomType));
+            String addOns = readAddOns(i);
+                    vouchers.add(new Voucher(offer, vouchers.size() + 1, numberOfNights, numberOfPeople,
+                            roomType, addOns));
         }
         offer.setVouchers(vouchers);
     }
@@ -26,18 +27,24 @@ public class VoucherCreator {
         System.out.print("Podaj liczbę voucherów do utworzenia: ");
         return scanner.nextInt();
     }
+
     private int readNumberOfNights(int voucherCount) {
         System.out.print("Voucher nr " + voucherCount + ": podaj liczbę nocy ");
         return scanner.nextInt();
     }
-    private int readNumberOfPeople(int voucherCount){
+
+    private int readNumberOfPeople(int voucherCount) {
         System.out.print("Voucher nr " + voucherCount + ": podaj liczbę osób ");
         return scanner.nextInt();
     }
 
-    private String readRoomType(int voucherCount){
+    private String readRoomType(int voucherCount) {
         System.out.print("Voucher nr " + voucherCount + ": podaj rodzaj pokoju ");
         return scanner.nextLine();
     }
 
+    private String readAddOns(int voucherCount) {
+        System.out.print("Voucher nr " + voucherCount + ": podaj wliczone dodatki np. śniadanie ");
+        return scanner.nextLine();
+    }
 }
