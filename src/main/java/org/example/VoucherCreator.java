@@ -14,7 +14,10 @@ public class VoucherCreator {
         for (int i = 1; i <= numberOfVouchers; i++) {
             int numberOfNights = readNumberOfNights(i);
             int numberOfPeople = readNumberOfPeople(i);
-            vouchers.add(new Voucher(offer, vouchers.size() + 1, numberOfNights, numberOfPeople));
+            scanner.nextLine();
+            String roomType = readRoomType(i);
+            vouchers.add(new Voucher(offer, vouchers.size() + 1, numberOfNights, numberOfPeople,
+                    roomType));
         }
         offer.setVouchers(vouchers);
     }
@@ -32,6 +35,9 @@ public class VoucherCreator {
         return scanner.nextInt();
     }
 
-
+    private String readRoomType(int voucherCount){
+        System.out.print("Voucher nr " + voucherCount + ": podaj rodzaj pokoju ");
+        return scanner.nextLine();
+    }
 
 }
