@@ -17,8 +17,9 @@ public class VoucherCreator {
             scanner.nextLine();
             String roomType = readRoomType(i);
             String addOns = readAddOns(i);
+            String validity = readRestrictions(i);
                     vouchers.add(new Voucher(offer, vouchers.size() + 1, numberOfNights, numberOfPeople,
-                            roomType, addOns));
+                            roomType, addOns, validity));
         }
         offer.setVouchers(vouchers);
     }
@@ -45,6 +46,12 @@ public class VoucherCreator {
 
     private String readAddOns(int voucherCount) {
         System.out.print("Voucher nr " + voucherCount + ": podaj wliczone dodatki np. śniadanie ");
+        return scanner.nextLine();
+    }
+
+    private String readRestrictions(int voucherCount) {
+        System.out.print("Voucher nr " + voucherCount + ": podaj ograniczenia w wykorzystaniu vouchera np. " +
+                "ważny tylko w poniedziałki ");
         return scanner.nextLine();
     }
 }
