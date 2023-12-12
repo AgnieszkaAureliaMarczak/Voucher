@@ -18,7 +18,6 @@ public class OfferCreator {
         displayVouchers(offer.getVouchers());
         ContentCreator contentCreator = new ContentCreator();
         String vouchersAsString = contentCreator.createAllVouchersAsOneString(offer);
-        System.out.println(vouchersAsString);
         contentFileGenerator.createFile(vouchersAsString);
     }
 
