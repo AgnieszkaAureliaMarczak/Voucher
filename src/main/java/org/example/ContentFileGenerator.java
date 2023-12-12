@@ -1,5 +1,5 @@
 package org.example;
 
 public interface ContentFileGenerator {
-    void createFile(String offersAsString);
+    void createFile(String vouchersAsString);
 }
