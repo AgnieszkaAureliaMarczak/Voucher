@@ -30,28 +30,27 @@ public class VoucherCreator {
     }
 
     private int readNumberOfNights(int voucherCount) {
-        System.out.print("Voucher nr " + voucherCount + ": podaj liczbę nocy ");
+        System.out.print("Voucher nr " + voucherCount + ": podaj liczbę nocy: ");
         return scanner.nextInt();
     }
 
     private int readNumberOfPeople(int voucherCount) {
-        System.out.print("Voucher nr " + voucherCount + ": podaj liczbę osób ");
+        System.out.print("Voucher nr " + voucherCount + ": podaj liczbę osób: ");
         return scanner.nextInt();
     }
 
     private String readRoomType(int voucherCount) {
-        System.out.print("Voucher nr " + voucherCount + ": podaj rodzaj pokoju ");
+        System.out.print("Voucher nr " + voucherCount + ": podaj rodzaj pokoju: ");
         return scanner.nextLine();
     }
 
     private String readAddOns(int voucherCount) {
-        System.out.print("Voucher nr " + voucherCount + ": podaj wliczone dodatki np. śniadanie ");
+        System.out.print("Voucher nr " + voucherCount + ": podaj wliczone dodatki np. śniadanie: ");
         return scanner.nextLine();
     }
 
     private String readRestrictions(int voucherCount) {
-        System.out.print("Voucher nr " + voucherCount + ": podaj ograniczenia w wykorzystaniu vouchera np. " +
-                "ważny tylko w poniedziałki ");
+        System.out.print("Voucher nr " + voucherCount + ": podaj ograniczenia w wykorzystaniu vouchera: ");
         return scanner.nextLine();
     }
 }

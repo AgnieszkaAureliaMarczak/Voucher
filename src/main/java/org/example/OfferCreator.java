@@ -16,6 +16,9 @@ public class OfferCreator {
         Offer offer = createOffer();
         voucherCreator.fillWithVouchers(offer);
         displayVouchers(offer.getVouchers());
+        if (establishIfEditsNeeded()){
+            System.out.println("Edits needed.");
+        }
         ContentCreator contentCreator = new ContentCreator();
         String vouchersAsString = contentCreator.createAllVouchersAsOneString(offer);
         contentFileGenerator.createFile(vouchersAsString);
@@ -36,9 +39,22 @@ public class OfferCreator {
     }
 
     public void displayVouchers(List<Voucher> vouchers) {
+        System.out.println();
+        System.out.println("Utworzone vouchery:");
         for (Voucher voucher : vouchers) {
             System.out.println(voucher);
         }
+    }
+
+    public boolean establishIfEditsNeeded(){
+        System.out.println("\nCzy chcesz edytować vouchery?\n" +
+                "1. Tak\n" +
+                "2. Nie");
+        String userAnswer = scanner.nextLine();
+        return switch (userAnswer){
+            case "1" -> true;
+            default -> false;
+        };
     }
 
     @Override
