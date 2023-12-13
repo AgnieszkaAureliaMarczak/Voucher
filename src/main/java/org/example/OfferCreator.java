@@ -48,6 +48,7 @@ public class OfferCreator {
     }
 
     private boolean establishIfEditsNeeded() {
+        System.out.println();
         String textBlock = """
                 Czy chcesz edytować vouchery?
                 1. Tak
@@ -55,10 +56,7 @@ public class OfferCreator {
                 """;
         System.out.println(textBlock);
         String userAnswer = scanner.nextLine();
-        return switch (userAnswer) {
-            case "1" -> true;
-            default -> false;
-        };
+        return userAnswer.equals("1");
     }
 
     @Override
