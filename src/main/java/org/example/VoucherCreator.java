@@ -18,8 +18,8 @@ public class VoucherCreator {
             String roomType = readRoomType(i);
             String addOns = readAddOns(i);
             String validity = readRestrictions(i);
-                    vouchers.add(new Voucher(offer, vouchers.size() + 1, numberOfNights, numberOfPeople,
-                            roomType, addOns, validity));
+            vouchers.add(new Voucher(offer, vouchers.size() + 1, numberOfNights, numberOfPeople,
+                    roomType, addOns, validity));
         }
         offer.setVouchers(vouchers);
     }
@@ -51,6 +51,54 @@ public class VoucherCreator {
 
     private String readRestrictions(int voucherCount) {
         System.out.print("Voucher nr " + voucherCount + ": podaj ograniczenia w wykorzystaniu vouchera: ");
+        return scanner.nextLine();
+    }
+
+    public void edit(Offer offer) {
+        Voucher voucherToEdit = getVoucherToEdit(offer);
+        String textBlock = """
+                Które pole chcesz edytować?
+                1. Liczba nocy
+                2. Liczba osób
+                3. Rodzaj pokoju
+                4. Wliczone dodatki
+                5. Restrykcje
+                6. Żadne (wyjście)
+                """;
+        System.out.println(textBlock);
+        switch (scanner.nextInt()) {
+            case 1 -> readNumberOfNights(Integer.parseInt(voucherToEdit.getId()));
+            case 2 -> readNumberOfPeople(Integer.parseInt(voucherToEdit.getId()));
+            case 3 -> readRoomType(Integer.parseInt(voucherToEdit.getId()));
+            case 4 -> readRestrictions(Integer.parseInt(voucherToEdit.getId()));
+            case 5 -> readAddOns(Integer.parseInt(voucherToEdit.getId()));
+            default -> {
+            }
+        }
+        scanner.nextLine();
+    }
+
+    private Voucher getVoucherToEdit(Offer offer) {
+        boolean correctVoucherId;
+        Voucher voucherToEdit = null;
+        do {
+            correctVoucherId = true;
+            String voucherId = readVoucherId();
+            for (Voucher voucher : offer.getVouchers()) {
+                if (voucher.getId().equals(voucherId)) {
+                    voucherToEdit = voucher;
+                    return voucherToEdit;
+                } else {
+                    System.out.println("Podano niepoprawny id vouchera");
+                    correctVoucherId = false;
+                }
+            }
+        } while (!correctVoucherId);
+        return voucherToEdit;
+    }
+
+    private String readVoucherId() {
+        System.out.print("Podaj id vouchera, którego chcesz edytować: ");
         return scanner.nextLine();
     }
 }

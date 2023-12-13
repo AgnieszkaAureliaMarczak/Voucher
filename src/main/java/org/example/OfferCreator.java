@@ -16,35 +16,14 @@ public class OfferCreator {
         Offer offer = createOffer();
         voucherCreator.fillWithVouchers(offer);
         displayVouchers(offer.getVouchers());
-
         if (establishIfEditsNeeded()) {
-            Voucher voucherToEdit = getVoucherToEdit(offer);
-
+            voucherCreator.edit(offer);
         }
-
         ContentCreator contentCreator = new ContentCreator();
         String vouchersAsString = contentCreator.createAllVouchersAsOneString(offer);
         contentFileGenerator.createFile(vouchersAsString);
     }
 
-    private Voucher getVoucherToEdit(Offer offer) {
-        boolean correctVoucherId;
-        Voucher voucherToEdit = null;
-        do {
-            correctVoucherId = true;
-            String voucherId = readVoucherId();
-            for (Voucher voucher : offer.getVouchers()) {
-                if (voucher.getId().equals(voucherId)) {
-                    voucherToEdit = voucher;
-                    return voucherToEdit;
-                } else {
-                    System.out.println("Podano niepoprawny id vouchera");
-                    correctVoucherId = false;
-                }
-            }
-        } while (!correctVoucherId);
-        return voucherToEdit;
-    }
 
     public Offer createOffer() {
         return new Offer(readId(), readName());
@@ -69,19 +48,17 @@ public class OfferCreator {
     }
 
     private boolean establishIfEditsNeeded() {
-        System.out.println("\nCzy chcesz edytować vouchery?\n" +
-                "1. Tak\n" +
-                "2. Nie");
+        String textBlock = """
+                Czy chcesz edytować vouchery?
+                1. Tak
+                2. Nie
+                """;
+        System.out.println(textBlock);
         String userAnswer = scanner.nextLine();
         return switch (userAnswer) {
             case "1" -> true;
             default -> false;
         };
-    }
-
-    private String readVoucherId() {
-        System.out.print("Podaj id vouchera, którego chcesz edytować: ");
-        return scanner.nextLine();
     }
 
     @Override
