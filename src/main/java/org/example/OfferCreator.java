@@ -16,12 +16,34 @@ public class OfferCreator {
         Offer offer = createOffer();
         voucherCreator.fillWithVouchers(offer);
         displayVouchers(offer.getVouchers());
-        if (establishIfEditsNeeded()){
-            System.out.println("Edits needed.");
+
+        if (establishIfEditsNeeded()) {
+            Voucher voucherToEdit = getVoucherToEdit(offer);
+
         }
+
         ContentCreator contentCreator = new ContentCreator();
         String vouchersAsString = contentCreator.createAllVouchersAsOneString(offer);
         contentFileGenerator.createFile(vouchersAsString);
+    }
+
+    private Voucher getVoucherToEdit(Offer offer) {
+        boolean correctVoucherId;
+        Voucher voucherToEdit = null;
+        do {
+            correctVoucherId = true;
+            String voucherId = readVoucherId();
+            for (Voucher voucher : offer.getVouchers()) {
+                if (voucher.getId().equals(voucherId)) {
+                    voucherToEdit = voucher;
+                    return voucherToEdit;
+                } else {
+                    System.out.println("Podano niepoprawny id vouchera");
+                    correctVoucherId = false;
+                }
+            }
+        } while (!correctVoucherId);
+        return voucherToEdit;
     }
 
     public Offer createOffer() {
@@ -46,15 +68,20 @@ public class OfferCreator {
         }
     }
 
-    public boolean establishIfEditsNeeded(){
+    private boolean establishIfEditsNeeded() {
         System.out.println("\nCzy chcesz edytować vouchery?\n" +
                 "1. Tak\n" +
                 "2. Nie");
         String userAnswer = scanner.nextLine();
-        return switch (userAnswer){
+        return switch (userAnswer) {
             case "1" -> true;
             default -> false;
         };
+    }
+
+    private String readVoucherId() {
+        System.out.print("Podaj id vouchera, którego chcesz edytować: ");
+        return scanner.nextLine();
     }
 
     @Override

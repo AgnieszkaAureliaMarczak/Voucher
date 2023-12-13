@@ -20,6 +20,30 @@ public class Voucher {
         this.restrictions = validity;
     }
 
+    public void setNumberOfNights(int numberOfNights) {
+        this.numberOfNights = numberOfNights;
+    }
+
+    public void setNumberOfPeople(int numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
+
+    public void setAddOns(String addOns) {
+        this.addOns = addOns;
+    }
+
+    public void setRestrictions(String restrictions) {
+        this.restrictions = restrictions;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Nr vouchera: " + id + ", " + offer.getName() + ", liczba nocy: " + numberOfNights +
