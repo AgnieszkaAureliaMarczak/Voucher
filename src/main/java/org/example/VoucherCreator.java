@@ -56,14 +56,8 @@ public class VoucherCreator {
 
     public void edit(Offer offer) {
         Voucher voucherToEdit = readVoucherToEdit(offer);
-        boolean editsRequired;
-        do {
-            displayFieldsToEdit();
-            editsRequired = readAndSetFieldsToEdit(voucherToEdit);
-        } while (editsRequired);
-
-        System.out.println("Wyedytowany voucher:");
-        System.out.println(voucherToEdit);
+        editFields(voucherToEdit);
+        displayEditedVoucher(voucherToEdit);
     }
 
     private Voucher readVoucherToEdit(Offer offer) {
@@ -90,6 +84,14 @@ public class VoucherCreator {
         return scanner.nextLine();
     }
 
+    private void editFields(Voucher voucherToEdit) {
+        boolean editsRequired;
+        do {
+            displayFieldsToEdit();
+            editsRequired = readAndSetFieldsToEdit(voucherToEdit);
+        } while (editsRequired);
+    }
+
     private void displayFieldsToEdit() {
         String textBlock = """
                 Które pole chcesz edytować?
@@ -105,7 +107,9 @@ public class VoucherCreator {
 
     private boolean readAndSetFieldsToEdit(Voucher voucherToEdit) {
         boolean editsRequired = true;
-        switch (scanner.nextInt()) {
+        int selection = scanner.nextInt();
+        scanner.nextLine();
+        switch (selection) {
             case 1 -> voucherToEdit.setNumberOfNights(readNumberOfNights(voucherToEdit.getId()));
             case 2 -> voucherToEdit.setNumberOfPeople(readNumberOfPeople(voucherToEdit.getId()));
             case 3 -> voucherToEdit.setRoomType(readRoomType(voucherToEdit.getId()));
@@ -113,7 +117,11 @@ public class VoucherCreator {
             case 5 -> voucherToEdit.setRestrictions(readRestrictions(voucherToEdit.getId()));
             default -> editsRequired = false;
         }
-        scanner.nextLine();
         return editsRequired;
+    }
+
+    private void displayEditedVoucher(Voucher voucherToEdit) {
+        System.out.println("Wyedytowany voucher:");
+        System.out.println(voucherToEdit);
     }
 }

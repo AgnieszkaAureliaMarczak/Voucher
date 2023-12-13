@@ -16,9 +16,7 @@ public class OfferCreator {
         Offer offer = createOffer();
         voucherCreator.fillWithVouchers(offer);
         displayVouchers(offer.getVouchers());
-        if (establishIfEditsNeeded()) {
-            voucherCreator.edit(offer);
-        }
+        editVouchersIfRequired(offer);
         ContentCreator contentCreator = new ContentCreator();
         String vouchersAsString = contentCreator.createAllVouchersAsOneString(offer);
         contentFileGenerator.createFile(vouchersAsString);
@@ -47,12 +45,21 @@ public class OfferCreator {
         }
     }
 
+    private void editVouchersIfRequired(Offer offer) {
+       // boolean editsRequired;
+       // editsRequired = establishIfEditsNeeded();
+        while (establishIfEditsNeeded()) {
+            voucherCreator.edit(offer);
+           // editsRequired = establishIfEditsNeeded();
+        }
+    }
+
     private boolean establishIfEditsNeeded() {
         System.out.println();
         String textBlock = """
                 Czy chcesz edytować vouchery?
-                1. Tak
-                2. Nie
+                Tak - wpisz "1"
+                Nie - wpisz "2"
                 """;
         System.out.println(textBlock);
         String userAnswer = scanner.nextLine();
