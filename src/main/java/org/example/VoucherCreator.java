@@ -12,12 +12,12 @@ public class VoucherCreator {
         List<Voucher> vouchers = new ArrayList<>();
         int numberOfVouchers = readNumberOfVouchers();
         for (int i = 1; i <= numberOfVouchers; i++) {
-            int numberOfNights = readNumberOfNights(i);
-            int numberOfPeople = readNumberOfPeople(i);
+            int numberOfNights = readNumberOfNights(Integer.toString(i));
+            int numberOfPeople = readNumberOfPeople(Integer.toString(i));
             scanner.nextLine();
-            String roomType = readRoomType(i);
-            String addOns = readAddOns(i);
-            String validity = readRestrictions(i);
+            String roomType = readRoomType(Integer.toString(i));
+            String addOns = readAddOns(Integer.toString(i));
+            String validity = readRestrictions(Integer.toString(i));
             vouchers.add(new Voucher(offer, vouchers.size() + 1, numberOfNights, numberOfPeople,
                     roomType, addOns, validity));
         }
@@ -29,33 +29,33 @@ public class VoucherCreator {
         return scanner.nextInt();
     }
 
-    private int readNumberOfNights(int voucherCount) {
-        System.out.print("Voucher nr " + voucherCount + ": podaj liczbę nocy: ");
+    private int readNumberOfNights(String voucherNumber) {
+        System.out.print("Voucher nr " + voucherNumber + ": podaj liczbę nocy: ");
         return scanner.nextInt();
     }
 
-    private int readNumberOfPeople(int voucherCount) {
-        System.out.print("Voucher nr " + voucherCount + ": podaj liczbę osób: ");
+    private int readNumberOfPeople(String voucherNumber) {
+        System.out.print("Voucher nr " + voucherNumber + ": podaj liczbę osób: ");
         return scanner.nextInt();
     }
 
-    private String readRoomType(int voucherCount) {
-        System.out.print("Voucher nr " + voucherCount + ": podaj rodzaj pokoju: ");
+    private String readRoomType(String voucherNumber) {
+        System.out.print("Voucher nr " + voucherNumber + ": podaj rodzaj pokoju: ");
         return scanner.nextLine();
     }
 
-    private String readAddOns(int voucherCount) {
-        System.out.print("Voucher nr " + voucherCount + ": podaj wliczone dodatki np. śniadanie: ");
+    private String readAddOns(String voucherNumber) {
+        System.out.print("Voucher nr " + voucherNumber + ": podaj wliczone dodatki np. śniadanie: ");
         return scanner.nextLine();
     }
 
-    private String readRestrictions(int voucherCount) {
-        System.out.print("Voucher nr " + voucherCount + ": podaj ograniczenia w wykorzystaniu vouchera: ");
+    private String readRestrictions(String voucherNumber) {
+        System.out.print("Voucher nr " + voucherNumber + ": podaj ograniczenia w wykorzystaniu vouchera: ");
         return scanner.nextLine();
     }
 
     public void edit(Offer offer) {
-        Voucher voucherToEdit = getVoucherToEdit(offer);
+        Voucher voucherToEdit = readVoucherToEdit(offer);
         String textBlock = """
                 Które pole chcesz edytować?
                 1. Liczba nocy
@@ -67,18 +67,18 @@ public class VoucherCreator {
                 """;
         System.out.println(textBlock);
         switch (scanner.nextInt()) {
-            case 1 -> readNumberOfNights(Integer.parseInt(voucherToEdit.getId()));
-            case 2 -> readNumberOfPeople(Integer.parseInt(voucherToEdit.getId()));
-            case 3 -> readRoomType(Integer.parseInt(voucherToEdit.getId()));
-            case 4 -> readRestrictions(Integer.parseInt(voucherToEdit.getId()));
-            case 5 -> readAddOns(Integer.parseInt(voucherToEdit.getId()));
+            case 1 -> readNumberOfNights(voucherToEdit.getId());
+            case 2 -> readNumberOfPeople(voucherToEdit.getId());
+            case 3 -> readRoomType(voucherToEdit.getId());
+            case 4 -> readRestrictions(voucherToEdit.getId());
+            case 5 -> readAddOns(voucherToEdit.getId());
             default -> {
             }
         }
         scanner.nextLine();
     }
 
-    private Voucher getVoucherToEdit(Offer offer) {
+    private Voucher readVoucherToEdit(Offer offer) {
         boolean correctVoucherId;
         Voucher voucherToEdit = null;
         do {
@@ -89,7 +89,7 @@ public class VoucherCreator {
                     voucherToEdit = voucher;
                     return voucherToEdit;
                 } else {
-                    System.out.println("Podano niepoprawny id vouchera");
+                    System.out.println("Podano niepoprawny nr vouchera");
                     correctVoucherId = false;
                 }
             }
@@ -98,7 +98,7 @@ public class VoucherCreator {
     }
 
     private String readVoucherId() {
-        System.out.print("Podaj id vouchera, którego chcesz edytować: ");
+        System.out.print("Podaj nr vouchera, którego chcesz edytować: ");
         return scanner.nextLine();
     }
 }
