@@ -56,8 +56,11 @@ public class VoucherCreator {
 
     public void edit(Offer offer) {
         Voucher voucherToEdit = readVoucherToEdit(offer);
-        displayFieldsToEdit();
-        readAndSetFieldsToEdit(voucherToEdit);
+        boolean editsRequired;
+        do {
+            displayFieldsToEdit();
+            editsRequired = readAndSetFieldsToEdit(voucherToEdit);
+        } while (editsRequired);
 
         System.out.println("Wyedytowany voucher:");
         System.out.println(voucherToEdit);
@@ -81,11 +84,13 @@ public class VoucherCreator {
         } while (!correctVoucherId);
         return voucherToEdit;
     }
+
     private String readVoucherId() {
         System.out.print("Podaj nr vouchera, którego chcesz edytować: ");
         return scanner.nextLine();
     }
-    private void displayFieldsToEdit(){
+
+    private void displayFieldsToEdit() {
         String textBlock = """
                 Które pole chcesz edytować?
                 1. Liczba nocy
@@ -98,30 +103,17 @@ public class VoucherCreator {
         System.out.println(textBlock);
     }
 
-    private void readAndSetFieldsToEdit(Voucher voucherToEdit){
+    private boolean readAndSetFieldsToEdit(Voucher voucherToEdit) {
+        boolean editsRequired = true;
         switch (scanner.nextInt()) {
-            case 1 -> {
-                int newNumberOfNights = readNumberOfNights(voucherToEdit.getId());
-                voucherToEdit.setNumberOfNights(newNumberOfNights);
-            }
-            case 2 -> {
-                int newNumberOfPeople = readNumberOfPeople(voucherToEdit.getId());
-                voucherToEdit.setNumberOfPeople(newNumberOfPeople);
-            }
-            case 3 -> {
-                String NewRoomType = readRoomType(voucherToEdit.getId());
-                voucherToEdit.setRoomType(NewRoomType);
-            }
-            case 4 -> {
-                String newAddOns = readAddOns(voucherToEdit.getId());
-                voucherToEdit.setAddOns(newAddOns);
-            }
-            case 5 -> {
-                String newRestrictions = readRestrictions(voucherToEdit.getId());
-                voucherToEdit.setRestrictions(newRestrictions);
-            }
-            default ->{}
+            case 1 -> voucherToEdit.setNumberOfNights(readNumberOfNights(voucherToEdit.getId()));
+            case 2 -> voucherToEdit.setNumberOfPeople(readNumberOfPeople(voucherToEdit.getId()));
+            case 3 -> voucherToEdit.setRoomType(readRoomType(voucherToEdit.getId()));
+            case 4 -> voucherToEdit.setAddOns(readAddOns(voucherToEdit.getId()));
+            case 5 -> voucherToEdit.setRestrictions(readRestrictions(voucherToEdit.getId()));
+            default -> editsRequired = false;
         }
         scanner.nextLine();
+        return editsRequired;
     }
 }
