@@ -56,14 +56,8 @@ public class VoucherCreator {
 
     public void edit(Offer offer) {
         Voucher voucherToEdit = readVoucherToEdit(offer);
-        boolean editsRequired;
-        do {
-            displayFieldsToEdit();
-            editsRequired = readAndSetFieldsToEdit(voucherToEdit);
-        } while (editsRequired);
-
-        System.out.println("Wyedytowany voucher:");
-        System.out.println(voucherToEdit);
+        editFields(voucherToEdit);
+        displayEditedVoucher(voucherToEdit);
     }
 
     private Voucher readVoucherToEdit(Offer offer) {
@@ -88,6 +82,14 @@ public class VoucherCreator {
     private String readVoucherId() {
         System.out.print("Podaj nr vouchera, którego chcesz edytować: ");
         return scanner.nextLine();
+    }
+
+    private void editFields(Voucher voucherToEdit){
+        boolean editsRequired;
+        do {
+            displayFieldsToEdit();
+            editsRequired = readAndSetFieldsToEdit(voucherToEdit);
+        } while (editsRequired);
     }
 
     private void displayFieldsToEdit() {
@@ -115,5 +117,10 @@ public class VoucherCreator {
         }
         scanner.nextLine();
         return editsRequired;
+    }
+
+    private void displayEditedVoucher(Voucher voucherToEdit){
+        System.out.println("Wyedytowany voucher:");
+        System.out.println(voucherToEdit);
     }
 }
