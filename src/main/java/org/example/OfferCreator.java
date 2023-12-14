@@ -20,8 +20,6 @@ public class OfferCreator {
             voucherCreator.edit(offer);
         }
 
-
-
         ContentCreator contentCreator = new ContentCreator();
         String vouchersAsString = contentCreator.createAllVouchersAsOneString(offer);
         contentFileGenerator.createFile(vouchersAsString);
