@@ -16,8 +16,12 @@ public class OfferCreator {
         Offer offer = createOffer();
         voucherCreator.fillWithVouchers(offer);
         voucherCreator.displayVouchers(offer.getVouchers());
+        while (establishIfEditsNeeded()) {
+            voucherCreator.edit(offer);
+        }
 
-        editVouchersIfRequired(offer);
+
+
         ContentCreator contentCreator = new ContentCreator();
         String vouchersAsString = contentCreator.createAllVouchersAsOneString(offer);
         contentFileGenerator.createFile(vouchersAsString);
@@ -36,15 +40,6 @@ public class OfferCreator {
     private String readName() {
         System.out.print("Podaj nazwę oferty (SEO): ");
         return scanner.nextLine();
-    }
-
-    private void editVouchersIfRequired(Offer offer) {
-       // boolean editsRequired;
-       // editsRequired = establishIfEditsNeeded();
-        while (establishIfEditsNeeded()) {
-            voucherCreator.edit(offer);
-           // editsRequired = establishIfEditsNeeded();
-        }
     }
 
     private boolean establishIfEditsNeeded() {
