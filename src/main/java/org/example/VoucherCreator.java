@@ -14,7 +14,6 @@ public class VoucherCreator {
         for (int i = 1; i <= numberOfVouchers; i++) {
             int numberOfNights = readNumberOfNights(Integer.toString(i));
             int numberOfPeople = readNumberOfPeople(Integer.toString(i));
-            scanner.nextLine();
             String roomType = readRoomType(Integer.toString(i));
             String addOns = readAddOns(Integer.toString(i));
             String validity = readRestrictions(Integer.toString(i));
@@ -26,17 +25,23 @@ public class VoucherCreator {
 
     private int readNumberOfVouchers() {
         System.out.print("Podaj liczbę voucherów do utworzenia: ");
-        return scanner.nextInt();
+        int numberOfVouchers = scanner.nextInt();
+        scanner.nextLine();
+        return numberOfVouchers;
     }
 
     private int readNumberOfNights(String voucherNumber) {
         System.out.print("Voucher nr " + voucherNumber + ": podaj liczbę nocy: ");
-        return scanner.nextInt();
+        int numberOfNights = scanner.nextInt();
+        scanner.nextLine();
+        return numberOfNights;
     }
 
     private int readNumberOfPeople(String voucherNumber) {
         System.out.print("Voucher nr " + voucherNumber + ": podaj liczbę osób: ");
-        return scanner.nextInt();
+        int numberOfPeople = scanner.nextInt();
+        scanner.nextLine();
+        return numberOfPeople;
     }
 
     private String readRoomType(String voucherNumber) {
