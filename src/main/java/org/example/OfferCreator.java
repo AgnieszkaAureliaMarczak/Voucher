@@ -19,9 +19,8 @@ public class OfferCreator {
         while (establishIfEditsNeeded()) {
             voucherCreator.edit(offer);
         }
-
         ContentCreator contentCreator = new ContentCreator();
-        String vouchersAsString = contentCreator.createAllVouchersAsOneString(offer);
+        List<String> vouchersAsString = contentCreator.createAllVouchersAsStringList(offer);
         contentFileGenerator.createFile(vouchersAsString);
     }
 

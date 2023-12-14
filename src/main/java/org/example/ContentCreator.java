@@ -1,15 +1,16 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContentCreator {
 
-    public String createAllVouchersAsOneString(Offer offer) {
+    public List<String> createAllVouchersAsStringList(Offer offer) {
         List<Voucher> vouchers = offer.getVouchers();
-        String vouchersAsString = "";
+        List<String> vouchersAsStrings = new ArrayList<>();
         for (Voucher voucher : vouchers) {
-            vouchersAsString = vouchersAsString + voucher + ". ";
+            vouchersAsStrings.add(voucher.toString());
         }
-       return vouchersAsString.substring(0,vouchersAsString.length() - 1);
+        return vouchersAsStrings;
     }
 }

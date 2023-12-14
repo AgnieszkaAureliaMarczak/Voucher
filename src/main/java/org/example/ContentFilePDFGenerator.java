@@ -10,13 +10,14 @@ import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 import static org.apache.pdfbox.pdmodel.common.PDRectangle.LETTER;
 
 
 public class ContentFilePDFGenerator implements ContentFileGenerator {
-    public void createFile(String vouchersAsString) {
+    public void createFile(List<String> vouchersAsString) {
         PDDocument document = new PDDocument();
         PDPage page = new PDPage(PDRectangle.A4);
         PDRectangle rectangle = PDRectangle.A4;
@@ -29,7 +30,7 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
             contentStream.beginText();
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
             contentStream.newLineAtOffset(25, 821);
-            contentStream.showText(vouchersAsString.repeat(1000));
+          //  contentStream.showText(vouchersAsString.repeat(1000));
             contentStream.endText();
             contentStream.close();
             document.save("VoucherPDF" + liczba + ".pdf");

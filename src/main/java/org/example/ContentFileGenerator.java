@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.List;
+
 public interface ContentFileGenerator {
-    void createFile(String vouchersAsString);
+    void createFile(List<String> vouchersAsString);
 }
