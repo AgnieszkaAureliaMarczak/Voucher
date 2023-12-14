@@ -15,7 +15,8 @@ public class OfferCreator {
     public void createOfferComponents() {
         Offer offer = createOffer();
         voucherCreator.fillWithVouchers(offer);
-        displayVouchers(offer.getVouchers());
+        voucherCreator.displayVouchers(offer.getVouchers());
+
         editVouchersIfRequired(offer);
         ContentCreator contentCreator = new ContentCreator();
         String vouchersAsString = contentCreator.createAllVouchersAsOneString(offer);
@@ -35,14 +36,6 @@ public class OfferCreator {
     private String readName() {
         System.out.print("Podaj nazwę oferty (SEO): ");
         return scanner.nextLine();
-    }
-
-    public void displayVouchers(List<Voucher> vouchers) {
-        System.out.println();
-        System.out.println("Utworzone vouchery:");
-        for (Voucher voucher : vouchers) {
-            System.out.println(voucher);
-        }
     }
 
     private void editVouchersIfRequired(Offer offer) {

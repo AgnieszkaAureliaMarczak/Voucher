@@ -59,6 +59,14 @@ public class VoucherCreator {
         return scanner.nextLine();
     }
 
+    public void displayVouchers(List<Voucher> vouchers) {
+        System.out.println();
+        System.out.println("Utworzone vouchery:");
+        for (Voucher voucher : vouchers) {
+            System.out.println(voucher);
+        }
+    }
+
     public void edit(Offer offer) {
         Voucher voucherToEdit = readVoucherToEdit(offer);
         editFields(voucherToEdit);
