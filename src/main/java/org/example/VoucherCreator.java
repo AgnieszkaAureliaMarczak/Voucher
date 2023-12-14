@@ -84,7 +84,7 @@ public class VoucherCreator {
         return scanner.nextLine();
     }
 
-    private void editFields(Voucher voucherToEdit) {
+    private void editFields(Voucher voucherToEdit){
         boolean editsRequired;
         do {
             displayFieldsToEdit();
@@ -107,9 +107,9 @@ public class VoucherCreator {
 
     private boolean readAndSetFieldsToEdit(Voucher voucherToEdit) {
         boolean editsRequired = true;
-        int selection = scanner.nextInt();
+        int userInput = scanner.nextInt();
         scanner.nextLine();
-        switch (selection) {
+        switch (userInput) {
             case 1 -> voucherToEdit.setNumberOfNights(readNumberOfNights(voucherToEdit.getId()));
             case 2 -> voucherToEdit.setNumberOfPeople(readNumberOfPeople(voucherToEdit.getId()));
             case 3 -> voucherToEdit.setRoomType(readRoomType(voucherToEdit.getId()));
@@ -120,7 +120,7 @@ public class VoucherCreator {
         return editsRequired;
     }
 
-    private void displayEditedVoucher(Voucher voucherToEdit) {
+    private void displayEditedVoucher(Voucher voucherToEdit){
         System.out.println("Wyedytowany voucher:");
         System.out.println(voucherToEdit);
     }
