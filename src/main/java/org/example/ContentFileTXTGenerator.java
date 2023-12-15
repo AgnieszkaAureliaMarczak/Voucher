@@ -22,7 +22,7 @@ public class ContentFileTXTGenerator implements ContentFileGenerator {
             }
             fileWriter.close();
             printWriter.close();
-            System.out.println("Zapisuję plik txt z treścią...");
+            System.out.println("Creating a txt file...");
         } catch (IOException e) {
             System.out.println("File not found");
         }
