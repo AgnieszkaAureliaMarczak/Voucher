@@ -8,14 +8,18 @@ import java.util.List;
 
 public class ContentFileTXTGenerator implements ContentFileGenerator {
     public void createFile(List<String> vouchersAsString) {
-        File txtFile = new File("C:/Projekty Java/Voucher/VoucherTXT.txt");
+        String fileName = "VoucherTXT.txt";
+        File txtFile = new File(fileName);
         FileWriter fileWriter;
         try {
             txtFile.createNewFile();
-            PrintWriter printWriter = new PrintWriter("VoucherTXT.txt");
-            fileWriter = new FileWriter("VoucherTXT.txt");
-           // fileWriter.write(vouchersAsString);
-            printWriter.println(vouchersAsString);
+            PrintWriter printWriter = new PrintWriter(fileName);
+            fileWriter = new FileWriter(fileName);
+            for (String voucher : vouchersAsString) {
+                fileWriter.write(voucher);
+                System.out.println();
+                printWriter.println(voucher);
+            }
             fileWriter.close();
             printWriter.close();
             System.out.println("Zapisuję plik txt z treścią...");

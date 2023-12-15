@@ -20,23 +20,25 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
     public void createFile(List<String> vouchersAsString) {
         PDDocument document = new PDDocument();
         PDPage page = new PDPage(PDRectangle.A4);
-        PDRectangle rectangle = PDRectangle.A4;
+       // PDRectangle rectangle = PDRectangle.A4;
         document.addPage(page);
         Random random = new Random();
-        int liczba = random.nextInt();
-        System.out.println(liczba);
+        int number = random.nextInt();
+        System.out.println(number);
         try{
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
             contentStream.beginText();
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
             contentStream.newLineAtOffset(25, 821);
-          //  contentStream.showText(vouchersAsString.repeat(1000));
+            for (String voucher : vouchersAsString) {
+                contentStream.showText(voucher);
+            }
             contentStream.endText();
             contentStream.close();
-            document.save("VoucherPDF" + liczba + ".pdf");
+            document.save("VoucherPDF" + number + ".pdf");
             document.close();
         } catch(IOException e) {
-            System.out.println("Wyjatek");
+            System.out.println("File not found.");
         }
     }
 }
