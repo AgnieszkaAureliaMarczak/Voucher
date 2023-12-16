@@ -8,8 +8,8 @@ public class Main {
         /*OfferCreator offerCreator = new OfferCreator(new ContentFilePDFGenerator());
         offerCreator.createOfferComponents();*/
         List<String> teksty = new ArrayList<>();
-        teksty.add("abc");
         teksty.add("bdf");
+        teksty.add("abc");
         teksty.add("asf");
         new ContentFilePDFGenerator().createFile(teksty);
     }

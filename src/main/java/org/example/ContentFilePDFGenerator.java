@@ -29,16 +29,18 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
         try{
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
            // PDType0Font myFont = PDType0Font.load(document, new File("C:/Projekty Java/Voucher/Rethink_Sans/RethinkSans-VariableFont_wght.ttf"));
-            contentStream.beginText();
             contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
            // contentStream.setFont(myFont,12);
+
             int yOffset = 821;
             for (String voucher : vouchersAsString) {
+                contentStream.beginText();
                 contentStream.newLineAtOffset(25, yOffset);
                 contentStream.showText(voucher);
-                yOffset -= 120;
+                yOffset -= 20;
+                contentStream.endText();
             }
-            contentStream.endText();
+
             contentStream.close();
             document.save("VoucherPDF" + number + ".pdf");
             document.close();
@@ -46,5 +48,8 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
         } catch(IOException e) {
             System.out.println("File not found.");
         }
+    }
+
+    private void moveTexttoNewLine(){
     }
 }
