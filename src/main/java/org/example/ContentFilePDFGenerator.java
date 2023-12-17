@@ -30,10 +30,10 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
             // PDType0Font myFont = PDType0Font.load(document, new File("C:/Projekty Java/Voucher/Rethink_Sans/RethinkSans-VariableFont_wght.ttf"));
             contentStream.setFont(pdfTextWrapper.getFont(), pdfTextWrapper.getFontSize());
             // contentStream.setFont(myFont,12);
-            float yOffset = 821;
+            float yOffset = pdfTextWrapper.getStartY();
             for (String voucher : vouchersAsString) {
                 contentStream.beginText();
-                contentStream.newLineAtOffset(25, yOffset);
+                contentStream.newLineAtOffset(pdfTextWrapper.getStartX(), yOffset);
                 yOffset = pdfTextWrapper.writeAndWrapString(voucher, document, page);
                 contentStream.endText();
             }

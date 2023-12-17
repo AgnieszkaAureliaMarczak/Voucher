@@ -75,4 +75,12 @@ public class PDFTextWrapper {
     public int getFontSize() {
         return fontSize;
     }
+
+    public float getStartX() {
+        return startX;
+    }
+
+    public float getStartY() {
+        return startY;
+    }
 }
