@@ -8,9 +8,9 @@ public class Main {
         /*OfferCreator offerCreator = new OfferCreator(new ContentFilePDFGenerator());
         offerCreator.createOfferComponents();*/
         List<String> teksty = new ArrayList<>();
-        teksty.add("bdf");
-        teksty.add("abc");
-        teksty.add("asf");
+        teksty.add("bdf".repeat(50));
+        teksty.add("abc".repeat(50));
+        teksty.add("asf".repeat(50));
         new ContentFilePDFGenerator().createFile(teksty);
     }
 }

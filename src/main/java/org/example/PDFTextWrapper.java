@@ -1,29 +1,13 @@
 package org.example;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
-import java.io.IOException;
-import java.util.Random;
-
-public class Test3 {
-    public static void main(String[] args) {
-        String longText = "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. " +
-                "Powinien byc odpowiednio zawiniety, jesli jego szerokosc przekroczy okreslona wartosc. " +
-                "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. Powinien byc odpowiednio zawiniety, " +
-                "jesli jego szerokosc przekroczy okreslona wartosc.";
-
-        PDDocument document = new PDDocument();
-        PDPage page = new PDPage(PDRectangle.A4);
-        document.addPage(page);
-
-        Random random = new Random();
-        int number = random.nextInt();
-        System.out.println(number);
-
+public class PDFTextWrapper {
+    public void wrapWords(String voucher, PDDocument document, PDPage page) {
         try {
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
             int fontSize = 12;
@@ -33,7 +17,7 @@ public class Test3 {
             float startX = 25; // Początkowa pozycja X
             float startY = 821; // Początkowa pozycja Y
             float leading = -1.5f * fontSize; // Interlinia
-            String[] words = longText.split("\\s+");
+            String[] words = voucher.split("\\s+");
             StringBuilder line = new StringBuilder();
             for (String word : words) {
                 contentStream.beginText();
@@ -52,8 +36,6 @@ public class Test3 {
             contentStream.showText(line.toString());
             contentStream.endText();
             contentStream.close();
-            document.save("ZawijanieTekstu" + number +".pdf");
-            document.close();
         } catch (Exception e) {
             System.out.println("Exception found.");
         }
