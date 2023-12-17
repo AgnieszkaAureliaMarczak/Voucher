@@ -14,7 +14,11 @@ import java.util.Random;
 import static org.apache.pdfbox.pdmodel.common.PDRectangle.LETTER;
 
 public class ContentFilePDFGenerator implements ContentFileGenerator {
-    private PDFTextWrapper pdfTextWrapper = new PDFTextWrapper();
+    private PDFTextWrapper pdfTextWrapper;
+
+    public ContentFilePDFGenerator(PDFTextWrapper pdfTextWrapper) {
+        this.pdfTextWrapper = pdfTextWrapper;
+    }
 
     public void createFile(List<String> vouchersAsString) {
         PDDocument document = new PDDocument();
