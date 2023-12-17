@@ -16,6 +16,15 @@ public class PDFTextWrapper {
     private float startY; // Początkowa pozycja Y
     private float leading; // Interlinia
 
+    public PDFTextWrapper() {
+        this.font = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
+        this.fontSize = 12;
+        this.maxWidth = 565;
+        this.startX = 25;
+        this.startY = 821;
+        this.leading = -1.5f * fontSize;
+    }
+
     public PDFTextWrapper(PDType1Font font, int fontSize, float maxWidth, float startX, float startY) {
         this.font = font;
         this.fontSize = fontSize;
@@ -25,7 +34,7 @@ public class PDFTextWrapper {
         this.leading = -1.5f * fontSize;
     }
 
-    public void wrapWords(String voucher, PDDocument document, PDPage page) {
+    public float writeAndWrapString(String voucher, PDDocument document, PDPage page) {
         Random random = new Random();
         int number = random.nextInt();
         System.out.println(number);
@@ -51,11 +60,19 @@ public class PDFTextWrapper {
             contentStream.showText(line.toString());
             contentStream.endText();
             contentStream.close();
-            contentStream.close();
             document.save("ZawijanieTekstu" + number +".pdf");
             document.close();
         } catch (Exception e) {
             System.out.println("Exception found.");
         }
+        return startY += leading;
+    }
+
+    public PDType1Font getFont() {
+        return font;
+    }
+
+    public int getFontSize() {
+        return fontSize;
     }
 }

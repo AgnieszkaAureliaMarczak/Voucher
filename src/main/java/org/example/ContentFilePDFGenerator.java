@@ -4,14 +4,11 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
-
-import static org.apache.pdfbox.pdmodel.common.PDRectangle.LETTER;
 
 public class ContentFilePDFGenerator implements ContentFileGenerator {
     private PDFTextWrapper pdfTextWrapper;
@@ -31,14 +28,13 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
         try {
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
             // PDType0Font myFont = PDType0Font.load(document, new File("C:/Projekty Java/Voucher/Rethink_Sans/RethinkSans-VariableFont_wght.ttf"));
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 12);
+            contentStream.setFont(pdfTextWrapper.getFont(), pdfTextWrapper.getFontSize());
             // contentStream.setFont(myFont,12);
             float yOffset = 821;
             for (String voucher : vouchersAsString) {
                 contentStream.beginText();
                 contentStream.newLineAtOffset(25, yOffset);
-                pdfTextWrapper.wrapWords(voucher, document, page);
-                yOffset -= 20;
+                yOffset = pdfTextWrapper.writeAndWrapString(voucher, document, page);
                 contentStream.endText();
             }
             contentStream.close();
