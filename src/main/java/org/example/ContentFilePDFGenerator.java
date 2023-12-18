@@ -31,12 +31,13 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
             contentStream.setFont(pdfTextWrapper.getFont(), pdfTextWrapper.getFontSize());
             // contentStream.setFont(myFont,12);
             float yOffset = pdfTextWrapper.getStartY();
+            contentStream.beginText();
+            contentStream.newLineAtOffset(pdfTextWrapper.getStartX(), yOffset);
             for (String voucher : vouchersAsString) {
-                contentStream.beginText();
-                contentStream.newLineAtOffset(pdfTextWrapper.getStartX(), yOffset);
-                yOffset = pdfTextWrapper.writeAndWrapString(voucher, document, page);
-                contentStream.endText();
+                pdfTextWrapper.writeAndWrapString(voucher, document, page);
+                contentStream.newLineAtOffset(pdfTextWrapper.getStartX(), pdfTextWrapper.getStartY());
             }
+            contentStream.endText();
             contentStream.close();
             document.save("VoucherPDF" + number + ".pdf");
             document.close();

@@ -15,31 +15,32 @@ public class PDFTextWrapper {
     private float startX; // Początkowa pozycja X
     private float startY; // Początkowa pozycja Y
     private float leading; // Interlinia
+    private float lastLine;
 
     public PDFTextWrapper() {
         this.font = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
         this.fontSize = 12;
-        this.maxWidth = 565;
+        this.maxWidth = 550;
         this.startX = 25;
-        this.startY = 821;
+        this.startY = 811;
         this.leading = -1.5f * fontSize;
+        this.lastLine = 30;
     }
 
-    public PDFTextWrapper(PDType1Font font, int fontSize, float maxWidth, float startX, float startY) {
+    public PDFTextWrapper(PDType1Font font, int fontSize, float maxWidth, float startX, float startY, float lastLine) {
         this.font = font;
         this.fontSize = fontSize;
         this.maxWidth = maxWidth;
         this.startX = startX;
         this.startY = startY;
         this.leading = -1.5f * fontSize;
+        this.lastLine = lastLine;
     }
 
-    public float writeAndWrapString(String voucher, PDDocument document, PDPage page) {
-        Random random = new Random();
-        int number = random.nextInt();
-        System.out.println(number);
+    public void writeAndWrapString(String voucher, PDDocument document, PDPage page) {
         try {
-            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+            PDPageContentStream contentStream = new PDPageContentStream(document, page,
+                    PDPageContentStream.AppendMode.APPEND, true);
             contentStream.setFont(font, fontSize);
             String[] words = voucher.split("\\s+");
             StringBuilder line = new StringBuilder();
@@ -60,12 +61,10 @@ public class PDFTextWrapper {
             contentStream.showText(line.toString());
             contentStream.endText();
             contentStream.close();
-            document.save("ZawijanieTekstu" + number +".pdf");
-            document.close();
+            startY = startY + (2 * leading);
         } catch (Exception e) {
             System.out.println("Exception found.");
         }
-        return startY += leading;
     }
 
     public PDType1Font getFont() {
