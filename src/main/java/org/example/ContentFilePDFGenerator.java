@@ -4,8 +4,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +18,7 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
     public void createFile(List<String> vouchersAsString) {
         PDDocument document = new PDDocument();
         PDPage page = new PDPage(PDRectangle.A4);
-        // PDRectangle rectangle = PDRectangle.A4; //LETTER 611 X 792, A4 595 X 841
+        //LETTER 611 X 792, A4 595 X 841
         document.addPage(page);
         Random random = new Random();
         int number = random.nextInt();

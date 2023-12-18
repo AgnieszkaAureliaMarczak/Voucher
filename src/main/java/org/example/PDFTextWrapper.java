@@ -6,8 +6,6 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
-import java.util.Random;
-
 public class PDFTextWrapper {
     private PDType1Font font;
     private int fontSize;
