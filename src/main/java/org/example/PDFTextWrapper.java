@@ -3,11 +3,16 @@ package org.example;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
+import java.io.File;
+
 public class PDFTextWrapper {
-    private PDType1Font font;
+    private static final int DEFAULT_FONT_SIZE = 12;
+    private PDFont font;
     private int fontSize;
     private float maxWidth; // Maksymalna szerokość tekstu
     private float startX; // Początkowa pozycja X
@@ -15,17 +20,23 @@ public class PDFTextWrapper {
     private float leading; // Interlinia
     private float lastLine;
 
+
     public PDFTextWrapper() {
-        this.font = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
-        this.fontSize = 12;
-        this.maxWidth = 550;
-        this.startX = 25;
-        this.startY = 811;
-        this.leading = -1.5f * fontSize;
-        this.lastLine = 30;
+        this(new PDType1Font(Standard14Fonts.FontName.HELVETICA));
     }
 
-    public PDFTextWrapper(PDType1Font font, int fontSize, float maxWidth, float startX, float startY, float lastLine) {
+    public PDFTextWrapper(PDFont font) {
+        this(
+                font,
+                DEFAULT_FONT_SIZE,
+                550,
+                25,
+                811,
+                30
+        );
+    }
+
+    public PDFTextWrapper(PDFont font, int fontSize, float maxWidth, float startX, float startY, float lastLine) {
         this.font = font;
         this.fontSize = fontSize;
         this.maxWidth = maxWidth;
@@ -36,9 +47,8 @@ public class PDFTextWrapper {
     }
 
     public void writeAndWrapString(String voucher, PDDocument document, PDPage page) {
-        try {
-            PDPageContentStream contentStream = new PDPageContentStream(document, page,
-                    PDPageContentStream.AppendMode.APPEND, true);
+        try (PDPageContentStream contentStream = new PDPageContentStream(document, page,
+                PDPageContentStream.AppendMode.APPEND, true)) {
             contentStream.setFont(font, fontSize);
             String[] words = voucher.split("\\s+");
             StringBuilder line = new StringBuilder();
@@ -58,14 +68,17 @@ public class PDFTextWrapper {
             contentStream.newLineAtOffset(startX, startY);
             contentStream.showText(line.toString());
             contentStream.endText();
-            contentStream.close();
             startY = startY + (2 * leading);
         } catch (Exception e) {
             System.out.println("Exception found.");
+            e.printStackTrace();
+         /*   if (contentStream != null) {
+                contentStream.close();
+            }*/
         }
     }
 
-    public PDType1Font getFont() {
+    public PDFont getFont() {
         return font;
     }
 

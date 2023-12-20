@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        String dlugiTekst = "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. " +
+        String dlugiTekst = "To jest długi tekst, który chcemy zawinac do nowej linii. " +
                 "Powinien byc odpowiednio zawiniety, jesli jego szerokosc przekroczy okreslona wartosc. " +
                 "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. Powinien byc odpowiednio zawiniety, " +
                 "jesli jego szerokosc przekroczy okreslona wartosc.";
@@ -59,10 +59,10 @@ public class Main {
         testoweVouchery.add(dlugiTekst10);
         testoweVouchery.add(dlugiTekst11);
 
-        new ContentFilePDFGenerator(new PDFTextWrapper()).createFile(testoweVouchery);
+        new ContentFilePDFGenerator().createFile(testoweVouchery);
 
         System.exit(0);
-        OfferCreator offerCreator = new OfferCreator(new ContentFilePDFGenerator(new PDFTextWrapper()));
+        OfferCreator offerCreator = new OfferCreator(new ContentFilePDFGenerator());
         offerCreator.createOfferComponents();
     }
 }
