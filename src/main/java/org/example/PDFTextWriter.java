@@ -3,51 +3,17 @@ package org.example;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 import java.util.List;
 
-public class PDFTextWriter { //todo odpowiedzialność - wstawienie całej treści do dokumentu - więc już nie tylko wrappowanie
-    private static final int DEFAULT_FONT_SIZE = 12;
-    private PDFont font;
-    private int fontSize;
-    private float maxWidth; // Maksymalna szerokość tekstu
-    private float startX; // Początkowa pozycja X
-    private float startY; // Początkowa pozycja Y
-    private float leading; // Interlinia
-    private float lastLine;
-    private PDRectangle pageSize;
-
-
+public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzialność - wstawienie całej treści do dokumentu - więc już nie tylko wrappowanie
     //todo to wrapper powinien przyjmować wymiary a nie ustalać w naszej aplikacji jaki jest domyślny font itd- przenieść do głównej klasy
 
-    public PDFTextWriter() {
-        this(new PDType1Font(Standard14Fonts.FontName.HELVETICA));
-    }
+    private PDFont font;
 
     public PDFTextWriter(PDFont font) {
-        this(
-                font,
-                DEFAULT_FONT_SIZE,
-                550,
-                25,
-                811,
-                30,
-                PDRectangle.A4);
-    }
-
-    public PDFTextWriter(PDFont font, int fontSize, float maxWidth, float startX, float startY, float lastLine, PDRectangle pageSize) {
         this.font = font;
-        this.fontSize = fontSize;
-        this.maxWidth = maxWidth;
-        this.startX = startX;
-        this.startY = startY;
-        this.leading = -1.5f * fontSize;
-        this.lastLine = lastLine;
-        this.pageSize = pageSize;
     }
 
     public void writeContent(List<String> stringLines, PDDocument document) {
@@ -76,15 +42,7 @@ public class PDFTextWriter { //todo odpowiedzialność - wstawienie całej treś
                         startY += leading; // Przejście do nowej linii
                     }
                     line.append(word).append(" ");
-
                 }
-
-//                contentStream.beginText();
-//                contentStream.newLineAtOffset(startX, startY);
-//                contentStream.showText(line.toString());
-//                contentStream.endText();
-
-
                 startY += leading;
             } catch (Exception e) {
                 System.out.println("Exception found.");
