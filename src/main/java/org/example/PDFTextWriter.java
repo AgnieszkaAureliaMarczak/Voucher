@@ -19,6 +19,7 @@ public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzial
     public void writeContent(List<String> stringLines, PDDocument document) {
         PDPage page = new PDPage(pageSize);
         document.addPage(page);
+        float lineStartY = startY;
 
         for (String stringLine : stringLines) {
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page,
@@ -32,18 +33,27 @@ public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzial
 
                     float width = font.getStringWidth(line + word) / 1000 * fontSize;
                     if (width > maxWidth || i == words.length - 1) {
-
-                        contentStream.beginText();
-                        contentStream.newLineAtOffset(startX, startY);
-                        contentStream.showText(line.toString());
-                        contentStream.endText();
-
+                        if (startY >= lastLine) {
+                            contentStream.beginText();
+                            contentStream.newLineAtOffset(startX, lineStartY);
+                            contentStream.showText(line.toString());
+                            contentStream.endText();
+                        } else {
+                            PDPage newPage = new PDPage(pageSize);
+                            document.addPage(newPage);
+                            contentStream = new PDPageContentStream(document, newPage);
+                            contentStream.beginText();
+                            contentStream.newLineAtOffset(startX, startY);
+                            lineStartY = startY;
+                            contentStream.showText(line.toString());
+                            contentStream.endText();
+                        }
                         line.setLength(0);
-                        startY += leading; // Przejście do nowej linii
+                        lineStartY += leading; // Przejście do nowej linii
                     }
                     line.append(word).append(" ");
                 }
-                startY += leading;
+                lineStartY += leading;
             } catch (Exception e) {
                 System.out.println("Exception found.");
                 e.printStackTrace();
