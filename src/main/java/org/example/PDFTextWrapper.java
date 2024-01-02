@@ -3,14 +3,14 @@ package org.example;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
-import java.io.File;
+import java.util.List;
 
-public class PDFTextWrapper {
+public class PDFTextWrapper { //todo odpowiedzialność - wstawienie całej treści do dokumentu - więc już nie tylko wrappowanie
     private static final int DEFAULT_FONT_SIZE = 12;
     private PDFont font;
     private int fontSize;
@@ -19,7 +19,10 @@ public class PDFTextWrapper {
     private float startY; // Początkowa pozycja Y
     private float leading; // Interlinia
     private float lastLine;
+    private PDRectangle pageSize;
 
+
+    //todo to wrapper powinien przyjmować wymiary a nie ustalać w naszej aplikacji jaki jest domyślny font itd- przenieść do głównej klasy
 
     public PDFTextWrapper() {
         this(new PDType1Font(Standard14Fonts.FontName.HELVETICA));
@@ -32,11 +35,11 @@ public class PDFTextWrapper {
                 550,
                 25,
                 811,
-                30
-        );
+                30,
+                PDRectangle.A4);
     }
 
-    public PDFTextWrapper(PDFont font, int fontSize, float maxWidth, float startX, float startY, float lastLine) {
+    public PDFTextWrapper(PDFont font, int fontSize, float maxWidth, float startX, float startY, float lastLine, PDRectangle pageSize) {
         this.font = font;
         this.fontSize = fontSize;
         this.maxWidth = maxWidth;
@@ -44,53 +47,49 @@ public class PDFTextWrapper {
         this.startY = startY;
         this.leading = -1.5f * fontSize;
         this.lastLine = lastLine;
+        this.pageSize = pageSize;
     }
 
-    public void writeAndWrapString(String voucher, PDDocument document, PDPage page) {
-        try (PDPageContentStream contentStream = new PDPageContentStream(document, page,
-                PDPageContentStream.AppendMode.APPEND, true)) {
-            contentStream.setFont(font, fontSize);
-            String[] words = voucher.split("\\s+");
-            StringBuilder line = new StringBuilder();
-            for (String word : words) {
-                contentStream.beginText();
-                float width = font.getStringWidth(line + word) / 1000 * fontSize;
-                if (width > maxWidth) {
-                    contentStream.newLineAtOffset(startX, startY);
-                    contentStream.showText(line.toString());
-                    line.setLength(0);
-                    startY += leading; // Przejście do nowej linii
+    public void writeAndWrapContent(List<String> stringLines, PDDocument document) {
+        PDPage page = new PDPage(pageSize);
+        document.addPage(page);
+
+        for (String stringLine : stringLines) {
+            try (PDPageContentStream contentStream = new PDPageContentStream(document, page,
+                    PDPageContentStream.AppendMode.APPEND, true)) {
+                contentStream.setFont(font, fontSize);
+
+                String[] words = stringLine.split("\\s+");
+                StringBuilder line = new StringBuilder();
+                for (int i = 0; i < words.length; i++) {
+                    String word = words[i];
+
+                    float width = font.getStringWidth(line + word) / 1000 * fontSize;
+                    if (width > maxWidth || i == words.length - 1) {
+
+                        contentStream.beginText();
+                        contentStream.newLineAtOffset(startX, startY);
+                        contentStream.showText(line.toString());
+                        contentStream.endText();
+
+                        line.setLength(0);
+                        startY += leading; // Przejście do nowej linii
+                    }
+                    line.append(word).append(" ");
+
                 }
-                line.append(word).append(" ");
-                contentStream.endText();
+
+//                contentStream.beginText();
+//                contentStream.newLineAtOffset(startX, startY);
+//                contentStream.showText(line.toString());
+//                contentStream.endText();
+
+
+                startY += leading;
+            } catch (Exception e) {
+                System.out.println("Exception found.");
+                e.printStackTrace();
             }
-            contentStream.beginText();
-            contentStream.newLineAtOffset(startX, startY);
-            contentStream.showText(line.toString());
-            contentStream.endText();
-            startY = startY + (2 * leading);
-        } catch (Exception e) {
-            System.out.println("Exception found.");
-            e.printStackTrace();
-         /*   if (contentStream != null) {
-                contentStream.close();
-            }*/
         }
-    }
-
-    public PDFont getFont() {
-        return font;
-    }
-
-    public int getFontSize() {
-        return fontSize;
-    }
-
-    public float getStartX() {
-        return startX;
-    }
-
-    public float getStartY() {
-        return startY;
     }
 }
