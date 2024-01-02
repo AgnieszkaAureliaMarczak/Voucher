@@ -10,7 +10,7 @@ import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 import java.util.List;
 
-public class PDFTextWrapper { //todo odpowiedzialność - wstawienie całej treści do dokumentu - więc już nie tylko wrappowanie
+public class PDFTextWriter { //todo odpowiedzialność - wstawienie całej treści do dokumentu - więc już nie tylko wrappowanie
     private static final int DEFAULT_FONT_SIZE = 12;
     private PDFont font;
     private int fontSize;
@@ -24,11 +24,11 @@ public class PDFTextWrapper { //todo odpowiedzialność - wstawienie całej tre�
 
     //todo to wrapper powinien przyjmować wymiary a nie ustalać w naszej aplikacji jaki jest domyślny font itd- przenieść do głównej klasy
 
-    public PDFTextWrapper() {
+    public PDFTextWriter() {
         this(new PDType1Font(Standard14Fonts.FontName.HELVETICA));
     }
 
-    public PDFTextWrapper(PDFont font) {
+    public PDFTextWriter(PDFont font) {
         this(
                 font,
                 DEFAULT_FONT_SIZE,
@@ -39,7 +39,7 @@ public class PDFTextWrapper { //todo odpowiedzialność - wstawienie całej tre�
                 PDRectangle.A4);
     }
 
-    public PDFTextWrapper(PDFont font, int fontSize, float maxWidth, float startX, float startY, float lastLine, PDRectangle pageSize) {
+    public PDFTextWriter(PDFont font, int fontSize, float maxWidth, float startX, float startY, float lastLine, PDRectangle pageSize) {
         this.font = font;
         this.fontSize = fontSize;
         this.maxWidth = maxWidth;
@@ -50,7 +50,7 @@ public class PDFTextWrapper { //todo odpowiedzialność - wstawienie całej tre�
         this.pageSize = pageSize;
     }
 
-    public void writeAndWrapContent(List<String> stringLines, PDDocument document) {
+    public void writeContent(List<String> stringLines, PDDocument document) {
         PDPage page = new PDPage(pageSize);
         document.addPage(page);
 
