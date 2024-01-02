@@ -10,9 +10,12 @@ Create multiple accomodation vouchers with various variables and save them into 
 *I created this app to practise object-oriented principles such as inheritance and interfaces.*
 
 ## :pencil: Features
-:pencil2:
-:pencil2:
-:pencil2:
+:pencil2: Write unlimited number of coupons/vouchers   
+:pencil2: Five voucher variables available: number or nights, number of people, room type, add-ons and validity  
+:pencil2: Edit written vouchers at any time  
+:pencil2: Create a TXT or PDF file with your vouchers  
+:pencil2: Ready to print! :computer:  
+
 
 
 
