@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        String dlugiTekst = "To jest długi tekst, który chcemy zawinac do nowej linii. " +
-                "Powinien byc odpowiednio zawiniety, jesli jego szerokosc przekroczy okreslona wartosc. " +
+        String dlugiTekst = "To jest długi tekst, który chcemy zawinąć do nowej linii. " +
+                "Powinien być odpowiednio zawinięty, jeśli jego szerokość przekroczy określoną wartość. " +
                 "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. Powinien byc odpowiednio zawiniety, " +
                 "jesli jego szerokosc przekroczy okreslona wartosc.";
         String dlugiTekst1 = "dlugiTekst1: >>>> To jest dlugi tekst, ktory chcemy zawinac do nowej linii. " +

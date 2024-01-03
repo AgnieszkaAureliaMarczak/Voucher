@@ -24,7 +24,6 @@ public class OfferCreator {
         contentFileGenerator.createFile(vouchersAsString);
     }
 
-
     public Offer createOffer() {
         return new Offer(readId(), readName());
     }

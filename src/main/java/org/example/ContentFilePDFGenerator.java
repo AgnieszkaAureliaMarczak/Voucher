@@ -25,8 +25,8 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
     public ContentFilePDFGenerator() {
         this(
                 DEFAULT_FONT_SIZE,
-                530,
-                25,
+                483,
+                30,
                 811,
                 30,
                 PDRectangle.A4);
@@ -44,20 +44,23 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
     }
 
     public void createFile(List<String> vouchersAsString) {
-
         //LETTER 611 X 792, A4 595 X 841
-
         try (PDDocument document = new PDDocument()) {
             PDFont myFont = PDType0Font.load(document, new File(FILE_PATH_NAME));
             PDFTextWriter pdfTextWriter = new PDFTextWriter(myFont);
-            Random random = new Random();
-            int number = random.nextInt(100);
-            System.out.println(number);
+            int number = drawRandomNumber();
             pdfTextWriter.writeContent(vouchersAsString, document);
             document.save("VoucherPDF" + number + ".pdf");
             System.out.println("Creating a pdf file...");
         } catch (IOException e) {
             System.out.println("File not found.");
         }
+    }
+
+    private int drawRandomNumber(){
+        Random random = new Random();
+        int number = random.nextInt(100);
+        System.out.println(number);
+        return number;
     }
 }
