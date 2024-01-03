@@ -19,15 +19,16 @@ public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzial
     }
 
     public void writeContent(List<String> stringLines, PDDocument document) {
-        PDPage page = new PDPage(pageSize);
-        document.addPage(page);
+        PDPage page1 = new PDPage(pageSize);
+        PDPage currentPage = page1;
+        document.addPage(page1);
         float lineStartY = startY;
 
         for (String stringLine : stringLines) {
 
             PDPageContentStream contentStream = null;
             try  {
-                 contentStream = new PDPageContentStream(document, page,
+                 contentStream = new PDPageContentStream(document, currentPage,
                         PDPageContentStream.AppendMode.APPEND, true);
                 contentStream.setFont(font, fontSize);
 
@@ -47,20 +48,21 @@ public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzial
                             contentStream.endText();
                             line.setLength(0);
                             lineStartY += leading;
-                        } /*else {
+                        } else {
                             System.out.println("Nowa strona");
-                            PDPage newPage = new PDPage(pageSize);
-                            document.addPage(newPage);
+                             currentPage = new PDPage(pageSize);
+                            document.addPage(currentPage);
                             contentStream.close();
-                            contentStream = new PDPageContentStream(document, newPage);
+                            contentStream = new PDPageContentStream(document, currentPage);
                             contentStream.setFont(font, fontSize);
                             contentStream.beginText();
                             contentStream.newLineAtOffset(startX, startY);
                             lineStartY = startY;
                             contentStream.showText(line.toString());
                             contentStream.endText();
-                        }*/
-                         // Przejście do nowej linii
+                            line.setLength(0);
+                            lineStartY += leading;
+                        }
                     }
 
                 }

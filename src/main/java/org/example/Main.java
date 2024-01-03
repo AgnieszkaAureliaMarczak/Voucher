@@ -41,9 +41,18 @@ public class Main {
                 "Powinien byc odpowiednio zawiniety, jesli jego szerokosc przekroczy okreslona wartosc. " +
                 "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. Powinien byc odpowiednio zawiniety, " +
                 "jesli jego szerokosc przekroczy okreslona wartosc.";
-        String dlugiTekst9 = dlugiTekst1;
-        String dlugiTekst10 = dlugiTekst2;
-        String dlugiTekst11 = dlugiTekst3;
+        String dlugiTekst9 = "dlugiTekst9: >>>> To jest dlugi tekst, ktory chcemy zawinac do nowej linii. " +
+                "Powinien byc odpowiednio zawiniety, jesli jego szerokosc przekroczy okreslona wartosc. " +
+                "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. Powinien byc odpowiednio zawiniety, " +
+                "jesli jego szerokosc przekroczy okreslona wartosc.";
+        String dlugiTekst10 = "dlugiTekst10: >>>> To jest dlugi tekst, ktory chcemy zawinac do nowej linii. " +
+                "Powinien byc odpowiednio zawiniety, jesli jego szerokosc przekroczy okreslona wartosc. " +
+                "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. Powinien byc odpowiednio zawiniety, " +
+                "jesli jego szerokosc przekroczy okreslona wartosc.";
+        String dlugiTekst11 = "dlugiTekst11: >>>> To jest dlugi tekst, ktory chcemy zawinac do nowej linii. " +
+                "Powinien byc odpowiednio zawiniety, jesli jego szerokosc przekroczy okreslona wartosc. " +
+                "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. Powinien byc odpowiednio zawiniety, " +
+                "jesli jego szerokosc przekroczy okreslona wartosc.";
 
         List<String> testoweVouchery = new ArrayList<>();
         testoweVouchery.add(dlugiTekst);
@@ -55,9 +64,9 @@ public class Main {
         testoweVouchery.add(dlugiTekst6);
         testoweVouchery.add(dlugiTekst7);
         testoweVouchery.add(dlugiTekst8);
-        testoweVouchery.add(dlugiTekst9);
-        testoweVouchery.add(dlugiTekst10);
-        testoweVouchery.add(dlugiTekst11);
+        testoweVouchery.add(dlugiTekst9.toUpperCase());
+        testoweVouchery.add(dlugiTekst10.toUpperCase());
+        testoweVouchery.add(dlugiTekst11.toUpperCase());
 
         new ContentFilePDFGenerator().createFile(testoweVouchery);
 
