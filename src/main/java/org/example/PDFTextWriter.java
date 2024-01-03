@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzialność - wstawienie całej treści do dokumentu - więc już nie tylko wrappowanie
@@ -34,15 +35,19 @@ public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzial
                 StringBuilder line = new StringBuilder();
                 for (int i = 0; i < words.length; i++) {
                     String word = words[i];
-
+                    line.append(word).append(" ");
+                    System.out.println(word);
                     float width = font.getStringWidth(line + word) / 1000 * fontSize;
                     if (width > maxWidth || i == words.length - 1) {
                         if (lineStartY >= lastLine) {
                             contentStream.beginText();
                             contentStream.newLineAtOffset(startX, lineStartY);
                             contentStream.showText(line.toString());
+                            System.out.println(line);
                             contentStream.endText();
-                        } else {
+                            line.setLength(0);
+                            lineStartY += leading;
+                        } /*else {
                             System.out.println("Nowa strona");
                             PDPage newPage = new PDPage(pageSize);
                             document.addPage(newPage);
@@ -54,11 +59,10 @@ public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzial
                             lineStartY = startY;
                             contentStream.showText(line.toString());
                             contentStream.endText();
-                        }
-                        line.setLength(0);
-                        lineStartY += leading; // Przejście do nowej linii
+                        }*/
+                         // Przejście do nowej linii
                     }
-                    line.append(word).append(" ");
+
                 }
                 lineStartY += leading;
                 contentStream.close();
