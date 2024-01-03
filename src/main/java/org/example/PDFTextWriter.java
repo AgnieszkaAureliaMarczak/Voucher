@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
+import java.io.IOException;
 import java.util.List;
 
 public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzialność - wstawienie całej treści do dokumentu - więc już nie tylko wrappowanie
@@ -22,8 +23,11 @@ public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzial
         float lineStartY = startY;
 
         for (String stringLine : stringLines) {
-            try (PDPageContentStream contentStream = new PDPageContentStream(document, page,
-                    PDPageContentStream.AppendMode.APPEND, true)) {
+
+            PDPageContentStream contentStream = null;
+            try  {
+                 contentStream = new PDPageContentStream(document, page,
+                        PDPageContentStream.AppendMode.APPEND, true);
                 contentStream.setFont(font, fontSize);
 
                 String[] words = stringLine.split("\\s+");
@@ -33,15 +37,18 @@ public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzial
 
                     float width = font.getStringWidth(line + word) / 1000 * fontSize;
                     if (width > maxWidth || i == words.length - 1) {
-                        if (startY >= lastLine) {
+                        if (lineStartY >= lastLine) {
                             contentStream.beginText();
                             contentStream.newLineAtOffset(startX, lineStartY);
                             contentStream.showText(line.toString());
                             contentStream.endText();
                         } else {
+                            System.out.println("Nowa strona");
                             PDPage newPage = new PDPage(pageSize);
                             document.addPage(newPage);
+                            contentStream.close();
                             contentStream = new PDPageContentStream(document, newPage);
+                            contentStream.setFont(font, fontSize);
                             contentStream.beginText();
                             contentStream.newLineAtOffset(startX, startY);
                             lineStartY = startY;
@@ -54,9 +61,18 @@ public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzial
                     line.append(word).append(" ");
                 }
                 lineStartY += leading;
-            } catch (Exception e) {
+                contentStream.close();
+            } catch (IOException e) {
                 System.out.println("Exception found.");
                 e.printStackTrace();
+                try {
+                    if (contentStream != null) {
+                        contentStream.close();
+                    }
+                } catch (IOException e2) {
+                    e.printStackTrace();
+                }
+
             }
         }
     }
