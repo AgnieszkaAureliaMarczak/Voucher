@@ -17,7 +17,6 @@ public class PDFTextWriter extends ContentFilePDFGenerator {
     }
 
     public void writeContent(List<String> stringLines, PDDocument document) {
-
         do {
             writeOnePage(stringLines, document);
         } while (!stringLines.isEmpty());
@@ -37,22 +36,38 @@ public class PDFTextWriter extends ContentFilePDFGenerator {
                 for (int i = 0; i < words.length; i++) {
                     String word = words[i];
                     float width = font.getStringWidth(line + word) / 1000 * fontSize;
-                    line.append(word).append(" ");
+                    /*line.append(word).append(" ");
                     if (width > maxWidth || i == words.length - 1) {
-                        if (lineStartY >= lastLine) {
-                            contentStream.beginText();
-                            contentStream.newLineAtOffset(startX, lineStartY);
-                            contentStream.showText(line.toString());
-                            contentStream.endText();
-                            line.setLength(0);
-                            lineStartY += leading;
-                        } else {
+                        if (lineStartY < lastLine) {
                             System.out.println("Nowa strona");
                             return;
                         }
+                        contentStream.beginText();
+                        contentStream.newLineAtOffset(startX, lineStartY);
+                        contentStream.showText(line.toString());
+                        contentStream.endText();
+                        line.setLength(0);
+                        lineStartY += leading;
+                    }*/
+                    if (width > maxWidth) {
+                        if (lineStartY < lastLine) {
+                            System.out.println("Nowa strona");
+                            return;
+                        }
+                        contentStream.beginText();
+                        contentStream.newLineAtOffset(startX, lineStartY);
+                        contentStream.showText(line.toString());
+                        contentStream.endText();
+                        line.setLength(0);
+                        lineStartY += leading;
                     }
+                    line.append(word).append(" ");
                 }
-                lineStartY += leading;
+                contentStream.beginText();
+                contentStream.newLineAtOffset(startX, lineStartY);
+                contentStream.showText(line.toString());
+                contentStream.endText();
+                lineStartY = lineStartY + (2 * leading);
                 stringLines.remove(stringLine);
             } catch (IOException e) {
                 System.out.println("Exception found.");
