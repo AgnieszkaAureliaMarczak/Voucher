@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,66 +20,52 @@ public class PDFTextWriter extends ContentFilePDFGenerator { //todo odpowiedzial
     }
 
     public void writeContent(List<String> stringLines, PDDocument document) {
-        PDPage page1 = new PDPage(pageSize);
-        PDPage currentPage = page1;
-        document.addPage(page1);
+
+        do{
+            writeOnePage(stringLines, document);
+        }while (!stringLines.isEmpty());
+
+    }
+
+    private void writeOnePage(List<String> stringLines, PDDocument document) {
+        PDPage currentPage = new PDPage(pageSize);
+        document.addPage(currentPage);
+
         float lineStartY = startY;
+        List<String> linesCopy = new ArrayList<>(stringLines);
 
-        for (String stringLine : stringLines) {
-
-            PDPageContentStream contentStream = null;
-            try  {
-                 contentStream = new PDPageContentStream(document, currentPage,
-                        PDPageContentStream.AppendMode.APPEND, true);
+        for (String stringLine : linesCopy) {
+            try ( PDPageContentStream  contentStream = new PDPageContentStream(document, currentPage,
+                    PDPageContentStream.AppendMode.APPEND, true))  {
                 contentStream.setFont(font, fontSize);
 
                 String[] words = stringLine.split("\\s+");
                 StringBuilder line = new StringBuilder();
+
                 for (int i = 0; i < words.length; i++) {
                     String word = words[i];
                     line.append(word).append(" ");
-                    System.out.println(word);
                     float width = font.getStringWidth(line + word) / 1000 * fontSize;
                     if (width > maxWidth || i == words.length - 1) {
                         if (lineStartY >= lastLine) {
                             contentStream.beginText();
                             contentStream.newLineAtOffset(startX, lineStartY);
                             contentStream.showText(line.toString());
-                            System.out.println(line);
                             contentStream.endText();
                             line.setLength(0);
                             lineStartY += leading;
+
                         } else {
                             System.out.println("Nowa strona");
-                             currentPage = new PDPage(pageSize);
-                            document.addPage(currentPage);
-                            contentStream.close();
-                            contentStream = new PDPageContentStream(document, currentPage);
-                            contentStream.setFont(font, fontSize);
-                            contentStream.beginText();
-                            contentStream.newLineAtOffset(startX, startY);
-                            lineStartY = startY;
-                            contentStream.showText(line.toString());
-                            contentStream.endText();
-                            line.setLength(0);
-                            lineStartY += leading;
+                          return;
                         }
                     }
-
                 }
                 lineStartY += leading;
-                contentStream.close();
+                stringLines.remove(stringLine);
             } catch (IOException e) {
                 System.out.println("Exception found.");
                 e.printStackTrace();
-                try {
-                    if (contentStream != null) {
-                        contentStream.close();
-                    }
-                } catch (IOException e2) {
-                    e.printStackTrace();
-                }
-
             }
         }
     }
