@@ -37,7 +37,7 @@ public class PDFTextWriter extends ContentFilePDFGenerator {
                     String word = words[i];
                     float width = font.getStringWidth(line + word) / 1000 * fontSize;
                     /*line.append(word).append(" ");
-                    if (width > maxWidth || i == words.length - 1) {
+                    if (width > maxWidth || i == words.length - 1) {//wersja z dodaniem ostatniego slowa w linijce
                         if (lineStartY < lastLine) {
                             System.out.println("Nowa strona");
                             return;
@@ -49,7 +49,7 @@ public class PDFTextWriter extends ContentFilePDFGenerator {
                         line.setLength(0);
                         lineStartY += leading;
                     }*/
-                    if (width > maxWidth) {
+                    if (width > maxWidth) {  //wersja bez dodania ostatniego slowa w linijce
                         if (lineStartY < lastLine) {
                             System.out.println("Nowa strona");
                             return;
