@@ -67,6 +67,7 @@ public class PDFTextWriter extends ContentFilePDFGenerator {
                 contentStream.newLineAtOffset(startX, lineStartY);
                 contentStream.showText(line.toString());
                 contentStream.endText();
+
                 lineStartY = lineStartY + (2 * leading);
                 stringLines.remove(stringLine);
             } catch (IOException e) {
