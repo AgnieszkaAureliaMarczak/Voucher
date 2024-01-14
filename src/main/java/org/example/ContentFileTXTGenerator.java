@@ -10,7 +10,7 @@ public class ContentFileTXTGenerator implements ContentFileGenerator {
     public void createFile(List<String> vouchersAsString) {
         String fileName = "VoucherTXT.txt";
         try {
-            FileWriter  fileWriter = new FileWriter(fileName);
+            FileWriter fileWriter = new FileWriter(fileName);
             PrintWriter printWriter = new PrintWriter(fileName);
             for (String voucher : vouchersAsString) {
                 fileWriter.write(voucher + "\n");
