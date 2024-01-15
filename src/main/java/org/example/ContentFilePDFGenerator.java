@@ -28,7 +28,7 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
                 540,
                 30,
                 811,
-                30,
+                31,
                 PDRectangle.A4);
     }
 
@@ -48,8 +48,8 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
         try (PDDocument document = new PDDocument()) {
             PDFont myFont = PDType0Font.load(document, new File(FILE_PATH_NAME));
             PDFTextWriter pdfTextWriter = new PDFTextWriter(myFont);
-            int number = drawRandomNumber();
             pdfTextWriter.writeContent(vouchersAsString, document);
+            int number = drawRandomNumber();
             document.save("VoucherPDF" + number + ".pdf");
             System.out.println("Creating a pdf file...");
         } catch (IOException e) {

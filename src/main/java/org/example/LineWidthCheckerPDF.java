@@ -5,7 +5,6 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import java.io.IOException;
 
 public class LineWidthCheckerPDF implements LineWidthChecker{
-
     private double maxLineWidth;
     private PDFont font;
     private int fontSize;
