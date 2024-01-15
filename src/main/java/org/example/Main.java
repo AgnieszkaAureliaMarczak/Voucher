@@ -40,7 +40,8 @@ public class Main {
         String dlugiTekst8 = "dlugiTekst8: >>>> To jest dlugi tekst, ktory chcemy zawinac do nowej linii. " +
                 "Powinien byc odpowiednio zawiniety, jesli jego szerokosc przekroczy okreslona wartosc. " +
                 "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. Powinien byc odpowiednio zawiniety, " +
-                "jesli jego szerokosc przekroczy okreslona wartosc.";
+                "jesli jego szerokosc przekroczy okreslona wartosc. To jest kolejny długi tekst, który chcemy zawinąć " +
+                "do kolejnej linii, jeśli się nie zmieści.";
         String dlugiTekst9 = "dlugiTekst9: >>>> To jest dlugi tekst, ktory chcemy zawinac do nowej linii. " +
                 "Powinien byc odpowiednio zawiniety, jesli jego szerokosc przekroczy okreslona wartosc. " +
                 "To jest dlugi tekst, ktory chcemy zawinac do nowej linii. Powinien byc odpowiednio zawiniety, " +

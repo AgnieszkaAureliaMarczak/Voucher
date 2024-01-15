@@ -33,7 +33,8 @@ public class PDFTextWriter extends ContentFilePDFGenerator {
                     currentPage = newPage;
                     lineStartY = startY;
                 }
-                try (PDPageContentStream contentStream = new PDPageContentStream(document, currentPage,
+                lineStartY = writeOneLine(document, currentPage, lineStartY, stringLines);
+                /*try (PDPageContentStream contentStream = new PDPageContentStream(document, currentPage,
                         PDPageContentStream.AppendMode.APPEND, true)) {
                     contentStream.setFont(font, fontSize);
                     contentStream.beginText();
@@ -44,10 +45,26 @@ public class PDFTextWriter extends ContentFilePDFGenerator {
                 } catch (IOException e) {
                     System.out.println("Exception found.");
                     e.printStackTrace();
-                }
+                }*/
             }
             lineStartY += leading;
             contentList.remove(content);
         }
+    }
+
+    private float writeOneLine(PDDocument document, PDPage currentPage, float lineStartY, List<String> stringLines) {
+        try (PDPageContentStream contentStream = new PDPageContentStream(document, currentPage,
+                PDPageContentStream.AppendMode.APPEND, true)) {
+            contentStream.setFont(font, fontSize);
+            contentStream.beginText();
+            contentStream.newLineAtOffset(startX, lineStartY);
+            contentStream.showText(stringLines.remove(0));
+            contentStream.endText();
+            lineStartY += leading;
+        } catch (IOException e) {
+            System.out.println("Exception found.");
+            e.printStackTrace();
+        }
+        return lineStartY;
     }
 }
