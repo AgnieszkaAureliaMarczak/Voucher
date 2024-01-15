@@ -16,7 +16,7 @@ public class PDFTextWriter extends ContentFilePDFGenerator {
 
     public PDFTextWriter(PDFont font) {
         this.font = font;
-        textWrapper = new TextWrapper(new LineWidthCheckerPDF(463,font, fontSize ));
+        textWrapper = new TextWrapper(new LineWidthCheckerPDF(maxWidth,font, fontSize));
     }
 
     public void writeContent(List<String> stringLines, PDDocument document) {
@@ -58,12 +58,7 @@ public class PDFTextWriter extends ContentFilePDFGenerator {
                         line.setLength(0);
                         lineStartY += leading;
                     }*/
-
-
-
-
-
-                lineStartY = lineStartY + (2 * leading);
+                lineStartY += leading;
                 contentList.remove(content);
             } catch (IOException e) {
                 System.out.println("Exception found.");

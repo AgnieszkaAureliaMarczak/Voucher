@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TextWrapper {
-
     private LineWidthChecker lineWidthChecker;
 
     public TextWrapper(LineWidthChecker lineWidthChecker) {
@@ -14,18 +13,17 @@ public class TextWrapper {
     public List<String> wrapText(String content) {
         String[] words = content.split("\\s+");
         StringBuilder line = new StringBuilder();
-        List<String> lines = new ArrayList<>();
+        List<String> contentAsLines = new ArrayList<>();
         for (String word : words) {
-            if (lineWidthChecker.exceedsMaxWidth(line + word)) {  //wersja bez dodania ostatniego slowa w linijce
-                lines.add(line.toString());
+            if (lineWidthChecker.exceedsMaxWidth(line + word)) {
+                contentAsLines.add(line.toString());
                 line.setLength(0);
             }
             line.append(word).append(" ");
         }
         if (!line.isEmpty()) {
-            lines.add(line.toString());
+            contentAsLines.add(line.toString());
         }
-        return lines;
+        return contentAsLines;
     }
-
 }

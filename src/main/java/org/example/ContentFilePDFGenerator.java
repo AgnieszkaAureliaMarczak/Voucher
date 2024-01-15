@@ -25,7 +25,7 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
     public ContentFilePDFGenerator() {
         this(
                 DEFAULT_FONT_SIZE,
-                483,
+                540,
                 30,
                 811,
                 30,
