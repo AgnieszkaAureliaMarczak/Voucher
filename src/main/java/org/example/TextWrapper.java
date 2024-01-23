@@ -1,21 +1,24 @@
 package org.example;
 
+import org.apache.pdfbox.pdmodel.font.PDFont;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TextWrapper {
-    private LineWidthChecker lineWidthChecker;
+    private LineWidthCheckerPDF lineWidthCheckerPDF;
 
-    public TextWrapper(LineWidthChecker lineWidthChecker) {
-        this.lineWidthChecker = lineWidthChecker;
+    public TextWrapper(LineWidthCheckerPDF lineWidthCheckerPDF) {
+        this.lineWidthCheckerPDF = lineWidthCheckerPDF;
     }
 
-    public List<String> wrapText(String content) {
+    public List<String> wrapText(String content, PDFont font) {
         String[] words = content.split("\\s+");
         StringBuilder line = new StringBuilder();
         List<String> contentAsLines = new ArrayList<>();
         for (String word : words) {
-            if (lineWidthChecker.exceedsMaxWidth(line + word)) {
+            lineWidthCheckerPDF.setFont(font);
+            if (lineWidthCheckerPDF.exceedsMaxWidth(line + word)) {
                 contentAsLines.add(line.toString());
                 line.setLength(0);
             }

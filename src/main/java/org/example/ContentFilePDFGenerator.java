@@ -18,7 +18,7 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
 
     public ContentFilePDFGenerator(PDFDocumentConfiguration configuration) {
         this.configuration = configuration;
-        textWrapper = new TextWrapper(new LineWidthCheckerPDF(configuration.getMaxWidth(), font, configuration.getFontSize()));
+        textWrapper = new TextWrapper(new LineWidthCheckerPDF(configuration.getMaxWidth(), configuration.getFontSize()));
     }
 
     public void createFile(List<String> vouchersAsString) {
@@ -34,17 +34,10 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
         }
     }
 
-    private int drawRandomNumber(){
-        Random random = new Random();
-        int number = random.nextInt(100);
-        System.out.println(number);
-        return number;
-    }
-
-    private PDFont createFont(PDDocument document){
+    private PDFont createFont(PDDocument document) {
         PDFont myFont = null;
         try {
-             myFont = PDType0Font.load(document, new File(configuration.getFILE_PATH_NAME()));
+            myFont = PDType0Font.load(document, new File(configuration.getFILE_PATH_NAME()));
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("File not there.");
@@ -58,7 +51,7 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
         float lineStartY = configuration.getStartY();
         List<String> contentListCopy = new ArrayList<>(contentList);
         for (String content : contentListCopy) {
-            List<String> lines = textWrapper.wrapText(content);
+            List<String> lines = textWrapper.wrapText(content, font);
             for (String line : lines) {
                 if (lineStartY < configuration.getLastLine()) {
                     PDPage newPage = new PDPage(configuration.getPageSize());
@@ -87,5 +80,12 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
             e.printStackTrace();
         }
         return lineStartY;
+    }
+
+    private int drawRandomNumber() {
+        Random random = new Random();
+        int number = random.nextInt(100);
+        System.out.println(number);
+        return number;
     }
 }
