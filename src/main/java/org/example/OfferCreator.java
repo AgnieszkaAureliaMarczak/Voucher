@@ -6,10 +6,10 @@ import java.util.Scanner;
 public class OfferCreator {
     private Scanner scanner = new Scanner(System.in);
     private VoucherCreator voucherCreator = new VoucherCreator();
-    private ContentFileGenerator contentFileGenerator;
+    private ContentFilePDFGenerator textWriter;
 
-    public OfferCreator(ContentFileGenerator contentFileGenerator) {
-        this.contentFileGenerator = contentFileGenerator;
+    public OfferCreator(ContentFilePDFGenerator textWriter) {
+        this.textWriter = textWriter;
     }
 
     public void createOfferComponents() {
@@ -21,7 +21,7 @@ public class OfferCreator {
         }
         ContentCreator contentCreator = new ContentCreator();
         List<String> vouchersAsString = contentCreator.createAllVouchersAsStringList(offer);
-        contentFileGenerator.createFile(vouchersAsString);
+        textWriter.createFile(vouchersAsString);
     }
 
     public Offer createOffer() {

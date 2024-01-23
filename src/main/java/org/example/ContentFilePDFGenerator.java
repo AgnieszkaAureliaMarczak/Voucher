@@ -1,54 +1,31 @@
 package org.example;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class ContentFilePDFGenerator implements ContentFileGenerator {
+    private TextWrapper textWrapper;
+    private PDFDocumentConfiguration configuration;
 
-    private final String FILE_PATH_NAME = "src/main/resources/RethinkSans-VariableFont_wght.ttf";
-    protected static final int DEFAULT_FONT_SIZE = 12;
-    protected int fontSize;
-    protected float maxWidth; // Maksymalna szerokość tekstu
-    protected float startX; // Początkowa pozycja X
-    protected float startY; // Początkowa pozycja Y
-    protected float leading; // Interlinia
-    protected float lastLine;
-    protected PDRectangle pageSize;
-
-    public ContentFilePDFGenerator() {
-        this(
-                DEFAULT_FONT_SIZE,
-                540,
-                30,
-                811,
-                31,
-                PDRectangle.A4);
-    }
-
-    public ContentFilePDFGenerator(int fontSize, float maxWidth, float startX, float startY,
-                                   float lastLine, PDRectangle pageSize) {
-        this.fontSize = fontSize;
-        this.maxWidth = maxWidth;
-        this.startX = startX;
-        this.startY = startY;
-        this.leading = -1.5f * fontSize;
-        this.lastLine = lastLine;
-        this.pageSize = pageSize;
+    public ContentFilePDFGenerator(PDFDocumentConfiguration configuration) {
+        this.configuration = configuration;
+        textWrapper = new TextWrapper(new LineWidthCheckerPDF(configuration.getMaxWidth(), font, configuration.getFontSize()));
     }
 
     public void createFile(List<String> vouchersAsString) {
         //LETTER 611 X 792, A4 595 X 841
         try (PDDocument document = new PDDocument()) {
-            PDFont myFont = PDType0Font.load(document, new File(FILE_PATH_NAME));
-            PDFTextWriter pdfTextWriter = new PDFTextWriter(myFont);
-            pdfTextWriter.writeContent(vouchersAsString, document);
+            PDFont myFont = createFont(document);
+            writeContent(vouchersAsString, document, myFont);
             int number = drawRandomNumber();
             document.save("VoucherPDF" + number + ".pdf");
             System.out.println("Creating a pdf file...");
@@ -62,5 +39,53 @@ public class ContentFilePDFGenerator implements ContentFileGenerator {
         int number = random.nextInt(100);
         System.out.println(number);
         return number;
+    }
+
+    private PDFont createFont(PDDocument document){
+        PDFont myFont = null;
+        try {
+             myFont = PDType0Font.load(document, new File(configuration.getFILE_PATH_NAME()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("File not there.");
+        }
+        return myFont;
+    }
+
+    private void writeContent(List<String> contentList, PDDocument document, PDFont font) {
+        PDPage currentPage = new PDPage(configuration.getPageSize());
+        document.addPage(currentPage);
+        float lineStartY = configuration.getStartY();
+        List<String> contentListCopy = new ArrayList<>(contentList);
+        for (String content : contentListCopy) {
+            List<String> lines = textWrapper.wrapText(content);
+            for (String line : lines) {
+                if (lineStartY < configuration.getLastLine()) {
+                    PDPage newPage = new PDPage(configuration.getPageSize());
+                    document.addPage(newPage);
+                    currentPage = newPage;
+                    lineStartY = configuration.getStartY();
+                }
+                lineStartY = writeOneLine(document, currentPage, lineStartY, line, font);
+            }
+            lineStartY += configuration.getLeading();
+            contentList.remove(content);
+        }
+    }
+
+    private float writeOneLine(PDDocument document, PDPage currentPage, float lineStartY, String stringLine, PDFont font) {
+        try (PDPageContentStream contentStream = new PDPageContentStream(document, currentPage,
+                PDPageContentStream.AppendMode.APPEND, true)) {
+            contentStream.setFont(font, configuration.getFontSize());
+            contentStream.beginText();
+            contentStream.newLineAtOffset(configuration.getStartX(), lineStartY);
+            contentStream.showText(stringLine);
+            contentStream.endText();
+            lineStartY += configuration.getLeading();
+        } catch (IOException e) {
+            System.out.println("Exception found.");
+            e.printStackTrace();
+        }
+        return lineStartY;
     }
 }

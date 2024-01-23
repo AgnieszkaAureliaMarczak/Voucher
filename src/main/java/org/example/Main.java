@@ -69,10 +69,10 @@ public class Main {
         testoweVouchery.add(dlugiTekst10.toUpperCase());
         testoweVouchery.add(dlugiTekst11.toUpperCase());
 
-        new ContentFilePDFGenerator().createFile(testoweVouchery);
+        new ContentFilePDFGenerator(new PDFDocumentConfiguration()).createFile(testoweVouchery);
 
         System.exit(0);
-        OfferCreator offerCreator = new OfferCreator(new ContentFilePDFGenerator());
+        OfferCreator offerCreator = new OfferCreator(new ContentFilePDFGenerator(new PDFDocumentConfiguration()));
         offerCreator.createOfferComponents();
     }
 }
