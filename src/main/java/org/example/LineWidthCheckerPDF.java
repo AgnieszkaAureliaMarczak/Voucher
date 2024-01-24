@@ -9,9 +9,10 @@ public class LineWidthCheckerPDF implements LineWidthChecker{
     private PDFont font;
     private int fontSize;
 
-    public LineWidthCheckerPDF(double maxLineWidth, int fontSize) {
+    public LineWidthCheckerPDF(double maxLineWidth, int fontSize, PDFont font) {
         this.maxLineWidth = maxLineWidth;
         this.fontSize = fontSize;
+        this.font = font;
     }
 
     @Override
@@ -27,9 +28,5 @@ public class LineWidthCheckerPDF implements LineWidthChecker{
             e.printStackTrace();
         }
         return -1;
-    }
-
-    public void setFont(PDFont font) {
-        this.font = font;
     }
 }

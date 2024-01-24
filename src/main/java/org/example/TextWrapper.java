@@ -6,19 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TextWrapper {
-    private LineWidthCheckerPDF lineWidthCheckerPDF;
+    private LineWidthChecker lineWidthChecker;
 
-    public TextWrapper(LineWidthCheckerPDF lineWidthCheckerPDF) {
-        this.lineWidthCheckerPDF = lineWidthCheckerPDF;
+    public TextWrapper(LineWidthChecker lineWidthChecker) {
+        this.lineWidthChecker = lineWidthChecker;
     }
 
-    public List<String> wrapText(String content, PDFont font) {
+    public List<String> wrapText(String content) {
         String[] words = content.split("\\s+");
         StringBuilder line = new StringBuilder();
         List<String> contentAsLines = new ArrayList<>();
         for (String word : words) {
-            lineWidthCheckerPDF.setFont(font);
-            if (lineWidthCheckerPDF.exceedsMaxWidth(line + word)) {
+            if (lineWidthChecker.exceedsMaxWidth(line + word)) {
                 contentAsLines.add(line.toString());
                 line.setLength(0);
             }

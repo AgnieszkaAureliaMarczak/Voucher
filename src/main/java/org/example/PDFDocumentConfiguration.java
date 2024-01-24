@@ -3,7 +3,6 @@ package org.example;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 
 public class PDFDocumentConfiguration {
-
     private final String FILE_PATH_NAME = "src/main/resources/RethinkSans-VariableFont_wght.ttf";
     private static final int DEFAULT_FONT_SIZE = 12;
     private int fontSize;
