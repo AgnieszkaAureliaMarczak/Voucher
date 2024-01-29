@@ -23,8 +23,6 @@ Create multiple accomodation vouchers with various variables and save them into 
 
 ## :pencil: How To Use  
 
-## **Work on project is in progress - the below instructions will apply once finished**  
-
 :pencil2: Clone the repository using [Git](https://git-scm.com/), then run it on your computer  
 
 :pencil2: Pro-Tip: for best functionality use [the Oracle OpenJDK version 17](https://www.oracle.com/pl/java/technologies/downloads/#java17)  
